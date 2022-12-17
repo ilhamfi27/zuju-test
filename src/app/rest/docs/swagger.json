@@ -1,0 +1,168 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "Rest API of Zuju Digital",
+    "title": "Zuju Digital Fixtures API.",
+    "contact": {
+      "name": "ilham",
+      "email": "r.ilhamfadhilah@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/fixtures": {
+      "get": {
+        "description": "Fetch all fixtures listing data",
+        "tags": ["Fixtures"],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Fixtures"
+          }
+        }
+      },
+      "post": {
+        "description": "Create fixtures listing data",
+        "tags": ["Fixtures"],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Fixtures"
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FixturesCreate"
+        }
+      }
+    },
+    "/fixtures/{id_fixtures}": {
+      "delete": {
+        "description": "Update fixtures listing data",
+        "tags": ["Fixtures"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_fixtures",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {}
+        }
+      },
+      "put": {
+        "description": "Create fixtures listing data",
+        "tags": ["Fixtures"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_fixtures",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Fixtures"
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/FixturesCreate"
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "Message": {
+        "description": "Content",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Message"
+            }
+          }
+        }
+      },
+      "Fixtures": {
+        "description": "Content",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Fixtures"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "FixturesCreate": {
+        "description": "Fixtures request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Fixtures"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Paginated": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "number"
+          },
+          "size": {
+            "type": "number"
+          },
+          "total_page": {
+            "type": "number"
+          },
+          "total_size": {
+            "type": "number"
+          },
+          "data": {
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "Generic": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "updated": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          }
+        }
+      },
+      "Fixtures": {
+        "type": "object",
+        "properties": {
+          "tournament_name": {
+            "type": "string",
+            "description": "Tournament Name"
+          },
+          "date": {
+            "type": "string",
+            "description": "Tournament Date"
+          }
+        }
+      }
+    }
+  }
+}

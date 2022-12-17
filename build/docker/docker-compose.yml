@@ -1,0 +1,116 @@
+version: '3.4'
+services:
+  ########################
+  # SERVICE DEPENDENCIES #
+  ########################
+  mariadb:
+    image: mariadb:10.3.10
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=zuju
+      - MYSQL_DATABASE=zuju
+      - MYSQL_USER=zuju
+      - MYSQL_PASSWORD=12345678
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '--silent']
+      start_period: 30s
+    networks:
+      default:
+    volumes:
+      - ./volumes/mariadb:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+    environment:
+      - PMA_HOST=mariadb
+    ports:
+      - 55559:80
+  prepare-mariadb:
+    image: mariadb:10.3.8
+    restart: on-failure
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      SQL: |-
+        CREATE DATABASE IF NOT EXISTS `zuju-test`;
+        GRANT ALL PRIVILEGES ON `zuju-test`.* TO 'zuju'@'%';
+    entrypoint: /bin/bash -c
+    command:
+      - mysql -u root -p"zuju" -h mariadb -e "$$SQL"
+  zuju-test-proxy:
+    image: caddy:2.2.1-alpine
+    restart: unless-stopped
+    depends_on:
+      - zuju-test
+    volumes:
+      - ../../.certs:/certs:ro
+    environment:
+      CADDY_CONF: |-
+        0.0.0.0:443 /* {
+          tls /certs/certs.bundle.pem /certs/key.pem
+          reverse_proxy /* zuju-test:3000
+        }
+    entrypoint: ['/bin/sh', '-c']
+    command:
+      - echo $$"$$CADDY_CONF" > caddy.conf && caddy run --config ./caddy.conf --adapter caddyfile
+    networks:
+      default:
+        aliases:
+          - test.zujugp.com
+  generate-certificates:
+    image: paulczar/omgwtfssl
+    environment:
+      SSL_SUBJECT: '*.zujugp.com'
+    working_dir: ${PWD}/../..
+    volumes:
+      - ../../:${PWD}/../..
+    entrypoint: ['/bin/bash', '-c']
+    command:
+      - mkdir -p .certs && cd .certs && generate-certs && cat cert.pem ca.pem > certs.bundle.pem
+  proxy:
+    image: dannydirect/tinyproxy:latest
+    ports:
+      - 8882:8888
+    command: ANY
+    networks:
+      default:
+  zuju-test:
+    restart: unless-stopped
+    image: ${IMAGE_NAME}:dev
+    build: 
+      context: ../../
+      dockerfile: ./build/docker/dockerfile
+      target: builder
+    working_dir: ${PWD}/../..
+    volumes:
+      - ../../:${PWD}/../..
+    env_file:
+      - ./.env
+    command: bash -c "npm run dev"
+    ports:
+      - 14045:3000
+    networks:
+      default:
+  zuju-test-migrator:
+    image: ${IMAGE_NAME}:dev
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    build: 
+      context: ../../
+      dockerfile: ./build/docker/dockerfile
+      target: builder
+    working_dir: ${PWD}/../..
+    volumes:
+      - ../../:${PWD}/../..
+    env_file:
+      - ./.env
+    command: bash -c "npm run migrate"
+    networks:
+      default:
+
+networks:
+  default:

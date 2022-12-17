@@ -1,0 +1,34 @@
+#################
+# Builder Image #
+#################
+FROM node:16.16.0-alpine as builder
+
+# install build-tools
+RUN apk update &&\
+    apk add --no-cache build-base git python3 bash
+
+WORKDIR /src/app
+
+COPY . .
+
+RUN npm install -g npm@latest
+RUN npm install -g typescript
+RUN npm install -g pkg
+RUN yarn install
+
+RUN PKG_PLATFORM=alpine npm run pkg
+
+#################
+# Final Image #
+#################
+FROM alpine:latest
+
+RUN \
+    apk update &&\
+    apk add --no-cache
+
+ENV NODE_CONFIG_DIR /etc/zuju
+
+COPY --from=builder /src/app/.bin/zuju-test /usr/local/bin/zuju-test
+
+ENTRYPOINT [ "zuju-test" ]
