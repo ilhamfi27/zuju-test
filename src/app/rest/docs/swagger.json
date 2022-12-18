@@ -63,6 +63,26 @@
         }
       }
     },
+    "/fixtures/calendar": {
+      "get": {
+        "description": "Fetch all fixtures by date",
+        "tags": ["Fixtures"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "startDate",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FixturesByDate"
+          }
+        }
+      }
+    },
     "/fixtures/{id_fixtures}": {
       "delete": {
         "description": "Update fixtures listing data",
@@ -119,6 +139,16 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Fixtures"
+            }
+          }
+        }
+      },
+      "FixturesByDate": {
+        "description": "Content",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FixturesByDate"
             }
           }
         }
@@ -190,6 +220,19 @@
           "date": {
             "type": "string",
             "description": "Tournament Date"
+          }
+        }
+      },
+      "FixturesByDate": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Tournament Date"
+          },
+          "match_count": {
+            "type": "number",
+            "description": "Number of tournament"
           }
         }
       }

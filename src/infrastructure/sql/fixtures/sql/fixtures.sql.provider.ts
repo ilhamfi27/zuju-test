@@ -1,17 +1,25 @@
+import knex, { Knex } from 'knex';
 import { ConfigProviderInterface } from '../../../../config/config.provider.interface';
 import Context from '../../../../context';
 import { NotFoundError } from '../../../../errors';
-import { Fixtures, FixturesQueryParam } from '../../../../interfaces/fixtures';
+import {
+  Fixtures,
+  FixturesByDate,
+  FixturesQueryParam,
+} from '../../../../interfaces/fixtures';
 import { Paginated, Param } from '../../../../interfaces/global';
 import SQLConnection, { tables } from '../../driver/connection';
 import TeamsStorageProvider from '../../teams/teams.provider';
+import moment from 'moment';
 
 export default class FixturesSQLProvider {
   configProvider: ConfigProviderInterface;
   teamsSM: TeamsStorageProvider;
+  db: Knex;
   constructor(configProvider: ConfigProviderInterface) {
     this.configProvider = configProvider;
     this.teamsSM = new TeamsStorageProvider(configProvider);
+    this.db = SQLConnection(this.configProvider);
   }
 
   fixturesDB() {
@@ -84,8 +92,8 @@ export default class FixturesSQLProvider {
         'AWAY'
       );
       fixture.score = { home: homeTeam.score, away: awayTeam.score };
-      delete homeTeam.score
-      delete awayTeam.score
+      delete homeTeam.score;
+      delete awayTeam.score;
       fixture.homeTeam = homeTeam;
       fixture.awayTeam = awayTeam;
     }
@@ -102,6 +110,40 @@ export default class FixturesSQLProvider {
       },
       data,
     };
+  }
+
+  async getAllByDate(
+    _context: Context,
+    param?: Param<FixturesQueryParam>
+  ): Promise<FixturesByDate[]> {
+    let fixturesDB = this.fixturesDB().select(
+      this.db.raw(
+        `count(${tables.INDEX_TABLE_FIXTURES}.id) as match_count, ${tables.INDEX_TABLE_FIXTURES}.date`
+      )
+    );
+
+    const startDate =
+      param && param.search && param.search.startDate
+        ? param.search.startDate
+        : undefined;
+
+    fixturesDB =
+      (startDate &&
+        fixturesDB.where(
+          `${tables.INDEX_TABLE_FIXTURES}.date`,
+          `>=`,
+          startDate
+        )) ||
+      fixturesDB;
+    fixturesDB = fixturesDB.groupBy(`${tables.INDEX_TABLE_FIXTURES}.date`);
+    fixturesDB = fixturesDB.orderBy(
+      `${tables.INDEX_TABLE_FIXTURES}.date`,
+      'asc'
+    );
+    const fixtures = await fixturesDB;
+    const data: FixturesByDate[] = await Promise.all(fixtures);
+    
+    return data;
   }
 
   async get(_context: Context, id: string): Promise<Fixtures> {
@@ -135,5 +177,39 @@ export default class FixturesSQLProvider {
 
   async delete(_context: Context, id: string): Promise<void> {
     await this.fixturesDB().delete().where({ id });
+  }
+
+  private async processFilter(
+    queryBuilder: Knex.QueryBuilder,
+    column: any,
+    value: string
+  ): Promise<Knex.QueryBuilder> {
+    const operator = value.split(':')[0];
+    value = value.split(':')[1];
+    if (moment(value, ['YYYY-MM-DD', 'YYYY-MM-DDTHH:mm:ssZ']).isValid()) {
+      value = moment(value).format('YYYY-MM-DDTHH:mm:ssZ') || value;
+    } else {
+      value = JSON.parse(value);
+    }
+    if (operator.match(/is/gi)) {
+      queryBuilder.whereRaw(`${column} IS ?`, [value]);
+    } else if (operator.match(/not/gi)) {
+      queryBuilder.whereRaw(`${column} IS NOT ?`, [value]);
+    } else if (operator.match(/eq/gi)) {
+      queryBuilder.where(column, `=`, value);
+    } else if (operator.match(/ne/gi)) {
+      queryBuilder.where(column, `!=`, value);
+    } else if (operator.match(/gt/gi)) {
+      queryBuilder.where(column, `>`, value);
+    } else if (operator.match(/gte/gi)) {
+      queryBuilder.where(column, `>=`, value);
+    } else if (operator.match(/lt/gi)) {
+      queryBuilder.where(column, `<=`, value);
+    } else if (operator.match(/lte/gi)) {
+      queryBuilder.where(column, `<=`, value);
+    } else if (operator.match(/like/gi)) {
+      queryBuilder.where(column, `like`, `%${value}%`);
+    }
+    return queryBuilder;
   }
 }

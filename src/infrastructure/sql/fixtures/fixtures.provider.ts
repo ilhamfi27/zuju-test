@@ -1,6 +1,6 @@
 import { ConfigProviderInterface } from "../../../config/config.provider.interface";
 import Context from "../../../context";
-import { Fixtures, FixturesQueryParam } from "../../../interfaces/fixtures";
+import { Fixtures, FixturesByDate, FixturesQueryParam } from "../../../interfaces/fixtures";
 import { Paginated, Param } from "../../../interfaces/global";
 import FixturesSQLProvider from "./sql/fixtures.sql.provider";
 import * as UUID from 'uuid'
@@ -18,6 +18,10 @@ export default class FixturesStorageProvider {
 
   async getAll(context: Context, param?: Param<FixturesQueryParam>): Promise<Paginated<Fixtures>> {
     return await this.coldDB.getAll(context, param)
+  }
+
+  async getAllByDate(context: Context, param?: Param<FixturesQueryParam>): Promise<FixturesByDate[]> {
+    return await this.coldDB.getAllByDate(context, param)
   }
 
   async get(context: Context, id: string): Promise<Fixtures> {

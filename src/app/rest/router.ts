@@ -25,6 +25,7 @@ export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface
     w.redirect('/api-docs')
   })
   router.get(`/fixtures`, fixturesCtrl.getAllFixtures)
+  router.get(`/fixtures/calendar`, fixturesCtrl.getAllFixturesByDate)
   router.post(`/fixtures`, fixturesCtrl.createFixtures)
   router.post(`/fixtures/:${fixturesParams.id}`, fixturesCtrl.updateFixtures)
   router.delete(`/fixtures/:${fixturesParams.id}`, fixturesCtrl.deleteFixtures)

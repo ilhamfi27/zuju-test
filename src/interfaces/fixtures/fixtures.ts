@@ -6,7 +6,13 @@ export interface Fixtures extends Generic {
   date: Date
 }
 
+export interface FixturesByDate {
+  date: Date
+  match_count: number
+}
+
 export interface FixturesQueryParam {
   search?: string
   sort?: string
+  startDate?: string
 }

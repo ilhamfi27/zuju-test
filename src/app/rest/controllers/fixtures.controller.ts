@@ -21,6 +21,7 @@ export const getFixturesBody = (r: RestRequest): Fixtures => ({
 });
 
 export const getSearch = (r: RestRequest): string => r.query.search as any;
+export const getStartDate = (r: RestRequest): string => r.query.startDate as any;
 export const getSort = (r: RestRequest): string => r.query.sort as any;
 
 export const fixturesController = (
@@ -47,6 +48,17 @@ export const fixturesController = (
       pagination: {
         page,
         size,
+      },
+    });
+    w.send(fl);
+  },
+  async getAllFixturesByDate(r: RestRequest, w: Response) {
+    const [startDate] = [
+      getStartDate(r),
+    ];
+    const fl = await m.fixturesManager().getAllByDate(r.context, {
+      search: {
+        startDate
       },
     });
     w.send(fl);
