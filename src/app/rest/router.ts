@@ -24,10 +24,10 @@ export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface
   router.get('/', (_r: RestRequest, w: Response) => {
     w.redirect('/api-docs')
   })
-  router.get(`/fixtures`, fixturesCtrl.fetchFixturesBody)
-  router.post(`/fixtures`, fixturesCtrl.createFixturesBody)
-  router.post(`/fixtures/:${fixturesParams.id}`, fixturesCtrl.updateFixturesBody)
-  router.delete(`/fixtures/:${fixturesParams.id}`, fixturesCtrl.deleteFixturesBody)
+  router.get(`/fixtures`, fixturesCtrl.getAllFixtures)
+  router.post(`/fixtures`, fixturesCtrl.createFixtures)
+  router.post(`/fixtures/:${fixturesParams.id}`, fixturesCtrl.updateFixtures)
+  router.delete(`/fixtures/:${fixturesParams.id}`, fixturesCtrl.deleteFixtures)
 
   router.use('/api-docs', swaggerExpress.serve, swaggerExpress.setup(docs));
   router.use(catchMiddleware(c.logger()));

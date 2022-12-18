@@ -3,6 +3,7 @@ import { ConfigProviderInterface } from '../../../config/config.provider.interfa
 import DomainManagerInterface from '../../../domain/domain.manager.interface';
 import { Fixtures } from '../../../interfaces/fixtures';
 import { RestRequest } from '../types';
+import { getPage, getSize } from './global';
 
 export const fixturesParams = {
   id: 'id_fixtures_listings',
@@ -19,26 +20,44 @@ export const getFixturesBody = (r: RestRequest): Fixtures => ({
   date: r.body.date,
 });
 
+export const getSearch = (r: RestRequest): string => r.query.search as any;
+export const getSort = (r: RestRequest): string => r.query.sort as any;
+
 export const fixturesController = (
   _configProvider: ConfigProviderInterface,
   m: DomainManagerInterface
 ) => ({
-  async createFixturesBody(r: RestRequest, w: Response) {
+  async createFixtures(r: RestRequest, w: Response) {
     const data = getFixturesBody(r);
     const fl = await m.fixturesManager().create(r.context, data);
     w.send(fl);
   },
-  async fetchFixturesBody(r: RestRequest, w: Response) {
-    const fl = await m.fixturesManager().fetch(r.context);
+  async getAllFixtures(r: RestRequest, w: Response) {
+    const [page, size, search, sort] = [
+      getPage(r),
+      getSize(r),
+      getSearch(r),
+      getSort(r),
+    ];
+    const fl = await m.fixturesManager().getAll(r.context, {
+      search: {
+        search,
+        sort,
+      },
+      pagination: {
+        page,
+        size,
+      },
+    });
     w.send(fl);
   },
-  async updateFixturesBody(r: RestRequest, w: Response) {
+  async updateFixtures(r: RestRequest, w: Response) {
     const data = getFixturesBody(r);
     const id = getFixturesID(r);
     const fl = await m.fixturesManager().update(r.context, id, data);
     w.send(fl);
   },
-  async deleteFixturesBody(r: RestRequest, w: Response) {
+  async deleteFixtures(r: RestRequest, w: Response) {
     const id = getFixturesID(r);
     await m.fixturesManager().delete(r.context, id);
     w.status(200);

@@ -111,6 +111,23 @@ services:
     command: bash -c "npm run migrate"
     networks:
       default:
+  zuju-test-seeder:
+    image: ${IMAGE_NAME}:dev
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    build: 
+      context: ../../
+      dockerfile: ./build/docker/dockerfile
+      target: builder
+    working_dir: ${PWD}/../..
+    volumes:
+      - ../../:${PWD}/../..
+    env_file:
+      - ./.env
+    command: bash -c "npm run seed"
+    networks:
+      default:
 
 networks:
   default:

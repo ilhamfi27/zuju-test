@@ -16,8 +16,8 @@ export default class FixturesStorageProvider {
     return this.coldDB.create(context, data)
   }
 
-  async fetch(context: Context, param?: Param<FixturesQueryParam>): Promise<Paginated<Fixtures>> {
-    return await this.coldDB.fetch(context, param)
+  async getAll(context: Context, param?: Param<FixturesQueryParam>): Promise<Paginated<Fixtures>> {
+    return await this.coldDB.getAll(context, param)
   }
 
   async get(context: Context, id: string): Promise<Fixtures> {

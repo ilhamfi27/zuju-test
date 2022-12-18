@@ -1,35 +1,30 @@
 import { ConfigProviderInterface } from '../../../../config/config.provider.interface';
 import Context from '../../../../context';
 import { NotFoundError } from '../../../../errors';
-import {
-  Fixtures,
-  FixturesQueryParam,
-} from '../../../../interfaces/fixtures';
+import { Fixtures, FixturesQueryParam } from '../../../../interfaces/fixtures';
 import { Paginated, Param } from '../../../../interfaces/global';
 import SQLConnection, { tables } from '../../driver/connection';
+import TeamsStorageProvider from '../../teams/teams.provider';
 
 export default class FixturesSQLProvider {
   configProvider: ConfigProviderInterface;
+  teamsSM: TeamsStorageProvider;
   constructor(configProvider: ConfigProviderInterface) {
     this.configProvider = configProvider;
+    this.teamsSM = new TeamsStorageProvider(configProvider);
   }
 
   fixturesDB() {
-    return SQLConnection(this.configProvider)(
-      tables.INDEX_TABLE_FIXTURES
-    );
+    return SQLConnection(this.configProvider)(tables.INDEX_TABLE_FIXTURES);
   }
 
-  async create(
-    _context: Context,
-    data: Fixtures
-  ): Promise<Fixtures> {
+  async create(_context: Context, data: Fixtures): Promise<Fixtures> {
     await this.fixturesDB().insert({ ...data });
     return data;
   }
 
-  async fetch(
-    _context: Context,
+  async getAll(
+    context: Context,
     param?: Param<FixturesQueryParam>
   ): Promise<Paginated<Fixtures>> {
     let fixturesDB = this.fixturesDB().select(
@@ -39,24 +34,30 @@ export default class FixturesSQLProvider {
       `${tables.INDEX_TABLE_FIXTURES}.date`
     );
 
+    const search =
+      param && param.search && param.search.search
+        ? param.search.search.split(':')
+        : undefined;
+    const sort =
+      param && param.search && param.search.sort
+        ? param.search.sort.split(':')
+        : undefined;
+
     fixturesDB =
-      (param &&
-        param.search &&
-        param.search.searchBy &&
+      (search &&
         fixturesDB.where(
-          `${tables.INDEX_TABLE_FIXTURES}.${param.search.searchBy}`,
-          param.search.search
+          `${tables.INDEX_TABLE_FIXTURES}.${search[0]}`,
+          `like`,
+          `%${search[1]}%`
         )) ||
       fixturesDB;
     fixturesDB =
-      (param &&
-        param.search &&
-        param.search.sortBy &&
+      (sort &&
         fixturesDB.orderBy(
-          `${tables.INDEX_TABLE_FIXTURES}.${param.search.sortBy}`,
-          param.search.sortOrder
+          `${tables.INDEX_TABLE_FIXTURES}.${sort[0]}`,
+          sort[1]
         )) ||
-      fixturesDB;
+      fixturesDB.orderBy(`${tables.INDEX_TABLE_FIXTURES}.date`, 'asc');
 
     const t = await fixturesDB
       .clone()
@@ -70,8 +71,23 @@ export default class FixturesSQLProvider {
     fixturesDB = fixturesDB.limit(size).offset((page - 1) * size);
 
     const fixtures = await fixturesDB;
-    for (const i in fixtures) {
-      fixtures[i].rules = JSON.parse(fixtures[i].rules);
+
+    for (const fixture of fixtures) {
+      const homeTeam = await this.teamsSM.getByCompetition(
+        context,
+        fixture.id,
+        'HOME'
+      );
+      const awayTeam = await this.teamsSM.getByCompetition(
+        context,
+        fixture.id,
+        'AWAY'
+      );
+      fixture.score = { home: homeTeam.score, away: awayTeam.score };
+      delete homeTeam.score
+      delete awayTeam.score
+      fixture.homeTeam = homeTeam;
+      fixture.awayTeam = awayTeam;
     }
 
     const total_size: number = t[0];
@@ -103,7 +119,7 @@ export default class FixturesSQLProvider {
     fixtures.rules = JSON.parse(fixtures.rules);
 
     if (!fixtures) throw NotFoundError('Fixtures not found');
-    return fixtures
+    return fixtures;
   }
 
   async update(

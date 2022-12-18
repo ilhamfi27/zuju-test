@@ -1,0 +1,194 @@
+[
+  {
+    "id": "competitor:0af0f0d0-caf6-4b65-871e-fb6bf6bef304",
+    "name": "Canada",
+    "code": "CAN",
+    "score": 1,
+    "team_side": "HOME",
+    "fixture_id": "competition:308837b7-013e-4e59-9367-b826f4f1eaf8"
+  },
+  {
+    "id": "competitor:babcea68-da20-460c-b2e7-a1eb60d019c9",
+    "name": "Morocco",
+    "code": "MAR",
+    "score": 2,
+    "team_side": "AWAY",
+    "fixture_id": "competition:308837b7-013e-4e59-9367-b826f4f1eaf8"
+  },
+  {
+    "id": "competitor:b55c7ef5-29e4-4e61-95e5-153461fcd352",
+    "name": "Croatia",
+    "code": "CRO",
+    "score": 0,
+    "team_side": "HOME",
+    "fixture_id": "competition:126ceec4-4e52-4ecc-bd69-6159049b6469"
+  },
+  {
+    "id": "competitor:3bbbd44a-4c50-4797-98a7-9808866bc61e",
+    "name": "Belgium",
+    "code": "BEL",
+    "score": 0,
+    "team_side": "AWAY",
+    "fixture_id": "competition:126ceec4-4e52-4ecc-bd69-6159049b6469"
+  },
+  {
+    "id": "competitor:dcd8ea6d-99a7-4149-bd08-26d67cd216fb",
+    "name": "Costa Rica",
+    "code": "CRC",
+    "score": 2,
+    "team_side": "HOME",
+    "fixture_id": "competition:e371c44b-244d-4804-8b74-3b9dfa0c298c"
+  },
+  {
+    "id": "competitor:af954d5c-a029-4a07-a6b3-f3117fa39ddc",
+    "name": "Germany",
+    "code": "GER",
+    "score": 4,
+    "team_side": "AWAY",
+    "fixture_id": "competition:e371c44b-244d-4804-8b74-3b9dfa0c298c"
+  },
+  {
+    "id": "competitor:0e9ab428-9c38-4549-9821-921033601887",
+    "name": "Japan",
+    "code": "JPN",
+    "score": 2,
+    "team_side": "HOME",
+    "fixture_id": "competition:978c94dc-15d4-4ae8-bdf5-8b0ba5e0ef18"
+  },
+  {
+    "id": "competitor:876f5938-c7d5-4fd8-b89b-8fd8be4c962f",
+    "name": "Spain",
+    "code": "ESP",
+    "score": 1,
+    "team_side": "AWAY",
+    "fixture_id": "competition:978c94dc-15d4-4ae8-bdf5-8b0ba5e0ef18"
+  },
+  {
+    "id": "competitor:503db70b-ffb4-4698-8a07-2dbf876a16cf",
+    "name": "Ghana",
+    "code": "GHA",
+    "score": 0,
+    "team_side": "HOME",
+    "fixture_id": "competition:37904d8b-bf11-42d3-b868-b5c28e0a0ba0"
+  },
+  {
+    "id": "competitor:bffcf802-4e26-4d0b-b1b3-726cc9bd1a67",
+    "name": "Uruguay",
+    "code": "URU",
+    "score": 2,
+    "team_side": "AWAY",
+    "fixture_id": "competition:37904d8b-bf11-42d3-b868-b5c28e0a0ba0"
+  },
+  {
+    "id": "competitor:f6acb6ce-1d78-4214-a42c-cc761d064040",
+    "name": "Republic of Korea",
+    "code": "KOR",
+    "score": 2,
+    "team_side": "HOME",
+    "fixture_id": "competition:10f1fa0e-cbbd-4197-b97e-d83bee0cbb63"
+  },
+  {
+    "id": "competitor:f63be8e9-19d0-424e-b7a6-266c48aa6cae",
+    "name": "Portugal",
+    "code": "POR",
+    "score": 1,
+    "team_side": "AWAY",
+    "fixture_id": "competition:10f1fa0e-cbbd-4197-b97e-d83bee0cbb63"
+  },
+  {
+    "id": "competitor:cb606065-bbd0-4165-87e8-4e01166f1d94",
+    "name": "Serbia",
+    "code": "SRB",
+    "score": 2,
+    "team_side": "HOME",
+    "fixture_id": "competition:a328cb05-a6cd-4945-8f02-232792f3e3ba"
+  },
+  {
+    "id": "competitor:7cbbdb53-fe56-4892-875c-00ea5fb2f16a",
+    "name": "Switzerland",
+    "code": "SUI",
+    "score": 3,
+    "team_side": "AWAY",
+    "fixture_id": "competition:a328cb05-a6cd-4945-8f02-232792f3e3ba"
+  },
+  {
+    "id": "competitor:c508fd5b-6ca1-4a20-bf2c-555ce4cc5c0b",
+    "name": "Cameroon",
+    "code": "CMR",
+    "score": 1,
+    "team_side": "HOME",
+    "fixture_id": "competition:5e71c838-047f-4f9b-b0dd-90dd9a24ad10"
+  },
+  {
+    "id": "competitor:8ffa1eaa-e77c-48a5-872b-79c52d3776dd",
+    "name": "Brazil",
+    "code": "BRA",
+    "score": 0,
+    "team_side": "AWAY",
+    "fixture_id": "competition:5e71c838-047f-4f9b-b0dd-90dd9a24ad10"
+  },
+  {
+    "id": "competitor:623c8ed6-a8a7-4f12-a2ab-f84143e33e11",
+    "name": "Netherlands",
+    "code": "NED",
+    "score": 3,
+    "team_side": "HOME",
+    "fixture_id": "competition:cca5df96-1e2e-49ca-b40f-9b83813c05ba"
+  },
+  {
+    "id": "competitor:5581ff72-5736-4891-a3e0-d4a145a27c03",
+    "name": "USA",
+    "code": "USA",
+    "score": 1,
+    "team_side": "AWAY",
+    "fixture_id": "competition:cca5df96-1e2e-49ca-b40f-9b83813c05ba"
+  },
+  {
+    "id": "competitor:5d66488e-85b6-4cf9-bcd9-1ad9b08344c3",
+    "name": "Argentina",
+    "code": "ARG",
+    "score": 2,
+    "team_side": "HOME",
+    "fixture_id": "competition:cf6dd48d-2f25-4afc-8629-7a40e53330ce"
+  },
+  {
+    "id": "competitor:f798d74d-89fe-471a-92c2-8fb4b77001fd",
+    "name": "Australia",
+    "code": "AUS",
+    "score": 1,
+    "team_side": "AWAY",
+    "fixture_id": "competition:cf6dd48d-2f25-4afc-8629-7a40e53330ce"
+  },
+  {
+    "id": "competitor:d10d3f33-27a9-4781-b0f2-f3db5a12952a",
+    "name": "Croatia",
+    "code": "CRO",
+    "score": null,
+    "team_side": "HOME",
+    "fixture_id": "competition-6208-4754-a346-789c059f66c3"
+  },
+  {
+    "id": "competitor:1c1f0d2f-d3cd-45f4-9c9c-add0b1e3e507",
+    "name": "Morocco",
+    "code": "MAR",
+    "score": null,
+    "team_side": "AWAY",
+    "fixture_id": "competition-6208-4754-a346-789c059f66c3"
+  },
+  {
+    "id": "competitor:0426743e-87de-48b2-9cc7-fe1822e2a273",
+    "name": "Argentina",
+    "code": "ARG",
+    "score": null,
+    "team_side": "HOME",
+    "fixture_id": "competition-8cb9-4898-87a4-8913fca3bf70"
+  },
+  {
+    "id": "competitor:4f4b534c-f076-4c69-8b4f-30e3c867448b",
+    "name": "France",
+    "code": "FRA",
+    "score": null,
+    "team_side": "AWAY",
+    "fixture_id": "competition-8cb9-4898-87a4-8913fca3bf70"
+  }
+]

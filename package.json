@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "migrate": "ts-node src/bin/app.ts migrate",
-    "dev": "nodemon --legacy-watch",
     "seed": "ts-node src/bin/app.ts seed",
+    "dev": "nodemon --legacy-watch",
     "start": "ts-node src/bin/app.ts serve",
     "build": "tsc --project tsconfig.json",
     "compile": "cross-env NODE_ENV=production PKG_CACHE_PATH=.pkg PKG_PLATFORM=${PKG_PLATFORM} ts-node build/compiler/pkg.ts",

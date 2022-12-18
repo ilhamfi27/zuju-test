@@ -1,10 +1,7 @@
 import { ConfigProviderInterface } from '../../../../config/config.provider.interface';
 import Context from '../../../../context';
 import { NotFoundError } from '../../../../errors';
-import {
-  Teams,
-  TeamsQueryParam,
-} from '../../../../interfaces/teams';
+import { Teams, TeamsQueryParam } from '../../../../interfaces/teams';
 import { Paginated, Param } from '../../../../interfaces/global';
 import SQLConnection, { tables } from '../../driver/connection';
 
@@ -15,20 +12,15 @@ export default class TeamsSQLProvider {
   }
 
   fixturesDB() {
-    return SQLConnection(this.configProvider)(
-      tables.INDEX_TABLE_TEAMS
-    );
+    return SQLConnection(this.configProvider)(tables.INDEX_TABLE_TEAMS);
   }
 
-  async create(
-    _context: Context,
-    data: Teams
-  ): Promise<Teams> {
+  async create(_context: Context, data: Teams): Promise<Teams> {
     await this.fixturesDB().insert({ ...data });
     return data;
   }
 
-  async fetch(
+  async getAll(
     _context: Context,
     param?: Param<TeamsQueryParam>
   ): Promise<Paginated<Teams>> {
@@ -63,18 +55,13 @@ export default class TeamsSQLProvider {
     const t = await fixturesDB
       .clone()
       .clearSelect()
-      .count<Record<string, number>>(
-        `${tables.INDEX_TABLE_TEAMS}.id as count`
-      );
+      .count<Record<string, number>>(`${tables.INDEX_TABLE_TEAMS}.id as count`);
 
     const page = (param && param.pagination && param.pagination.page) || 1;
     const size = (param && param.pagination && param.pagination.size) || 10;
     fixturesDB = fixturesDB.limit(size).offset((page - 1) * size);
 
     const fixtures = await fixturesDB;
-    for (const i in fixtures) {
-      fixtures[i].rules = JSON.parse(fixtures[i].rules);
-    }
 
     const total_size: number = t[0];
     if (!fixtures) throw NotFoundError('Fixtures details not found');
@@ -104,17 +91,32 @@ export default class TeamsSQLProvider {
       `${tables.INDEX_TABLE_TEAMS}.id`,
       id
     );
-    fixtures.rules = JSON.parse(fixtures.rules);
 
     if (!fixtures) throw NotFoundError('Fixtures details not found');
     return fixtures;
   }
 
-  async update(
+  async getByCompetition(
     _context: Context,
-    id: string,
-    data: Teams
+    fixture_id: string,
+    team_side: string
   ): Promise<Teams> {
+    let fixturesDB = this.fixturesDB().select(
+      `${tables.INDEX_TABLE_TEAMS}.id`,
+      `${tables.INDEX_TABLE_TEAMS}.name`,
+      `${tables.INDEX_TABLE_TEAMS}.code`,
+      `${tables.INDEX_TABLE_TEAMS}.score`,
+    );
+
+    const [fixtures] = await fixturesDB
+      .where(`${tables.INDEX_TABLE_TEAMS}.fixture_id`, fixture_id)
+      .where(`${tables.INDEX_TABLE_TEAMS}.team_side`, team_side);
+
+    if (!fixtures) throw NotFoundError('Fixtures details not found');
+    return fixtures;
+  }
+
+  async update(_context: Context, id: string, data: Teams): Promise<Teams> {
     await this.fixturesDB()
       .update({ ...data })
       .where({ id });

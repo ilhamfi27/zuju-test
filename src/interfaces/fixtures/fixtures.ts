@@ -7,8 +7,6 @@ export interface Fixtures extends Generic {
 }
 
 export interface FixturesQueryParam {
-  searchBy?: string
   search?: string
-  sortBy?: string
-  sortOrder?: 'asc' | 'desc'
+  sort?: string
 }

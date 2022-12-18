@@ -12,8 +12,8 @@ export default class FixturesDomain implements FixturesManager {
   create(context: Context, data: Fixtures): Promise<Fixtures> {
     return this.fixturesSM.create(context, data)
   }
-  fetch(context: Context, param?: Param<FixturesQueryParam> | undefined): Promise<Paginated<Fixtures>> {
-    return this.fixturesSM.fetch(context, param)
+  getAll(context: Context, param?: Param<FixturesQueryParam> | undefined): Promise<Paginated<Fixtures>> {
+    return this.fixturesSM.getAll(context, param)
   }
   update(context: Context, id: string, data: Fixtures): Promise<Fixtures> {
     return this.fixturesSM.update(context, id, data)

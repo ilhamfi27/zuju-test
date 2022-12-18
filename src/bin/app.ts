@@ -2,6 +2,7 @@ import HttpHandler from "../app/rest";
 import { ConfigProvider } from "../config/config.provider";
 import DomainManager from "../domain/domain.manager";
 import { migrate } from "../infrastructure/sql/driver/migration";
+import { seed } from "./seed";
 
 const configProvider = new ConfigProvider()
 const domainManager = new DomainManager(configProvider)
@@ -15,4 +16,8 @@ if (process.argv[2] === 'migrate') {
   const argv = process.argv
   argv.splice(0, 3)
   migrate(configProvider)(...argv)
+}
+
+if (process.argv[2] === 'seed') {
+  seed()
 }

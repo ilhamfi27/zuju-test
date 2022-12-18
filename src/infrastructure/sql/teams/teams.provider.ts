@@ -16,12 +16,16 @@ export default class TeamsStorageProvider {
     return this.coldDB.create(context, data)
   }
 
-  async fetch(context: Context, param?: Param<TeamsQueryParam>): Promise<Paginated<Teams>> {
-    return await this.coldDB.fetch(context, param)
+  async getAll(context: Context, param?: Param<TeamsQueryParam>): Promise<Paginated<Teams>> {
+    return await this.coldDB.getAll(context, param)
   }
 
   async get(context: Context, id: string): Promise<Teams> {
     return await this.coldDB.get(context, id)
+  }
+
+  async getByCompetition(context: Context, fixture_id: string, team_side: string): Promise<Teams> {
+    return await this.coldDB.getByCompetition(context, fixture_id, team_side)
   }
 
   async update(context: Context, id: string, data: Teams): Promise<Teams> {
