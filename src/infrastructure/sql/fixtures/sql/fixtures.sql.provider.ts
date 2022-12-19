@@ -98,7 +98,7 @@ export default class FixturesSQLProvider {
       fixture.awayTeam = awayTeam;
     }
 
-    const total_size: number = t[0];
+    const total_size: number = t[0]['count'];
     if (!fixtures) throw NotFoundError('Fixtures not found');
     const data: Fixtures[] = await Promise.all(fixtures);
     return {
