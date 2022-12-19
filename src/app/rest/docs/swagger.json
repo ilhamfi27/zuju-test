@@ -138,7 +138,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Fixtures"
+              "$ref": "#/components/schemas/PaginatedFixtures"
             }
           }
         }
@@ -160,7 +160,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Fixtures"
+              "$ref": "#/components/schemas/FixturesRequestBody"
             }
           }
         }
@@ -175,24 +175,31 @@
           }
         }
       },
-      "Paginated": {
+      "PaginatedFixtures": {
         "type": "object",
         "properties": {
-          "page": {
-            "type": "number"
-          },
-          "size": {
-            "type": "number"
-          },
-          "total_page": {
-            "type": "number"
-          },
-          "total_size": {
-            "type": "number"
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer"
+              },
+              "size": {
+                "type": "integer"
+              },
+              "total_size": {
+                "type": "integer"
+              },
+              "total_page": {
+                "type": "integer"
+              }
+            }
           },
           "data": {
             "type": "array",
-            "items": {}
+            "items": {
+              "$ref": "#/components/schemas/Fixtures"
+            }
           }
         }
       },
@@ -210,29 +217,81 @@
           }
         }
       },
+      "Score": {
+        "type": "object",
+        "properties": {
+          "home": {
+            "type": "integer"
+          },
+          "away": {
+            "type": "integer"
+          }
+        }
+      },
+      "Teams": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
       "Fixtures": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string"
+          },
           "tournament_name": {
-            "type": "string",
-            "description": "Tournament Name"
+            "type": "string"
+          },
+          "match_status": {
+            "type": "string"
           },
           "date": {
-            "type": "string",
-            "description": "Tournament Date"
+            "type": "string"
+          },
+          "score": {
+            "$ref": "#/components/schemas/Score"
+          },
+          "homeTeam": {
+            "$ref": "#/components/schemas/Teams"
+          },
+          "awayTeam": {
+            "$ref": "#/components/schemas/Teams"
           }
         }
       },
       "FixturesByDate": {
+        "type": "array",
+        "items": {
+          "properties": {
+            "date": {
+              "type": "string"
+            },
+            "match_count": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "FixturesRequestBody": {
         "type": "object",
         "properties": {
-          "date": {
-            "type": "string",
-            "description": "Tournament Date"
+          "tournament_name": {
+            "type": "string"
           },
-          "match_count": {
-            "type": "number",
-            "description": "Number of tournament"
+          "match_status": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
           }
         }
       }
