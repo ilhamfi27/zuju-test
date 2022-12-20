@@ -21,8 +21,16 @@ describe('GET /fixtures', () => {
       const res = await request(app).get(`/fixtures`);
       expect(res.status).toBe(200);
       expect(res.body.data).toBeDefined();
+      expect(res.body.data.length).toBe(10);
       expect(res.body.pagination).toBeDefined();
       expect(res.body.pagination.total_size).toBe(15);
+    });
+    test('should response with custom page size', async () => {
+      const res = await request(app).get(`/fixtures?size=30`);
+      expect(res.status).toBe(200);
+      expect(res.body.data).toBeDefined();
+      expect(res.body.data.length).toBe(15);
+      expect(res.body.pagination.page).toBe(1);
     });
   });
 });
