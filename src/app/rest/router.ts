@@ -4,8 +4,6 @@ import swaggerExpress from 'swagger-ui-express';
 import bodyParser from 'body-parser';
 import catchMiddleware from './middlewares/catch';
 import basicAuth from 'express-basic-auth'
-import DomainManagerInterface from '../../domain/domain.manager.interface';
-import { ConfigProviderInterface } from '../../config/config.provider.interface';
 import fixturesController, { fixturesParams } from './controllers/fixtures.controller';
 import { RestRequest } from './types';
 import teamsController, { teamsParams } from './controllers/teams.controller';
@@ -16,7 +14,7 @@ const getUnauthorizedResponse = (_req) => {
   return 'not authorized'
 }
 
-export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface) => {
+export const RestRouter = (c, m) => {
   const router = Router();
   const adminRouter = Router();
   const fixturesCtrl = fixturesController(c, m);

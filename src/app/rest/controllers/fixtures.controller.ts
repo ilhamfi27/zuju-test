@@ -1,6 +1,4 @@
 import { Response } from 'express';
-import { ConfigProviderInterface } from '../../../config/config.provider.interface';
-import DomainManagerInterface from '../../../domain/domain.manager.interface';
 import { Fixtures } from '../../../interfaces/fixtures';
 import { RestRequest } from '../types';
 import { getPage, getSize } from './global';
@@ -24,8 +22,8 @@ export const getStartDate = (r: RestRequest): string => r.query.startDate as any
 export const getSort = (r: RestRequest): string => r.query.sort as any;
 
 export const fixturesController = (
-  _configProvider: ConfigProviderInterface,
-  m: DomainManagerInterface
+  _configProvider,
+  m
 ) => ({
   async createFixtures(r: RestRequest, w: Response) {
     const data = getFixturesBody(r);

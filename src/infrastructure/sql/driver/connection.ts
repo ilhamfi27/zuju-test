@@ -1,6 +1,5 @@
 import knex, { Knex } from 'knex'
 import * as path from 'path'
-import { ConfigProviderInterface } from '../../../config/config.provider.interface'
 import { INDEX_TABLE_FIXTURES } from '../fixtures'
 import { INDEX_TABLE_TEAMS } from '../teams'
 
@@ -12,7 +11,7 @@ export const tables = {
 }
 
 
-export const SQLConnection = (configProvider: ConfigProviderInterface) => {
+export const SQLConnection = (configProvider) => {
 
   if(SQLConn) return SQLConn
   let client = configProvider.dsnProtocol()

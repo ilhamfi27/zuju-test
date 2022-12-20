@@ -1,6 +1,4 @@
 import { Response } from 'express';
-import { ConfigProviderInterface } from '../../../config/config.provider.interface';
-import DomainManagerInterface from '../../../domain/domain.manager.interface';
 import { Teams, TeamSide } from '../../../interfaces/teams';
 import { RestRequest } from '../types';
 import { getFixturesID } from './fixtures.controller';
@@ -27,10 +25,7 @@ export const getTeamsBody = (r: RestRequest): Teams => ({
   fixture_id: getFixturesID(r),
 });
 
-export const teamsController = (
-  _configProvider: ConfigProviderInterface,
-  m: DomainManagerInterface
-) => ({
+export const teamsController = (_configProvider, m) => ({
   async getAllTeams(r: RestRequest, w: Response) {
     const t = await m.teamsManager().getAll(r.context, getFixturesID(r));
     w.send(t).status(200);
@@ -43,7 +38,9 @@ export const teamsController = (
   },
   async updateTeams(r: RestRequest, w: Response) {
     const body = getTeamsBody(r);
-    const t = await m.teamsManager().createOrUpdate(r.context, getFixturesID(r), body);
+    const t = await m
+      .teamsManager()
+      .createOrUpdate(r.context, getFixturesID(r), body);
     w.send(t).status(200);
   },
 });

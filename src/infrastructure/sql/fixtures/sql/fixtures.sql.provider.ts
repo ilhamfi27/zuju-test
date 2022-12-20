@@ -1,5 +1,4 @@
 import { Knex } from 'knex';
-import { ConfigProviderInterface } from '../../../../config/config.provider.interface';
 import Context from '../../../../context';
 import { NotFoundError } from '../../../../errors';
 import {
@@ -13,10 +12,10 @@ import SQLConnection, { tables } from '../../driver/connection';
 import TeamsStorageProvider from '../../teams/teams.provider';
 
 export default class FixturesSQLProvider {
-  configProvider: ConfigProviderInterface;
+  configProvider;
   teamsSM: TeamsStorageProvider;
   db: Knex;
-  constructor(configProvider: ConfigProviderInterface) {
+  constructor(configProvider) {
     this.configProvider = configProvider;
     this.teamsSM = new TeamsStorageProvider(configProvider);
     this.db = SQLConnection(this.configProvider);

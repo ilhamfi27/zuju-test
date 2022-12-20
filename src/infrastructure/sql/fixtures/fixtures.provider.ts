@@ -1,4 +1,3 @@
-import { ConfigProviderInterface } from "../../../config/config.provider.interface";
 import Context from "../../../context";
 import { Fixtures, FixturesByDate, FixturesQueryParam } from "../../../interfaces/fixtures";
 import { Paginated, Param } from "../../../interfaces/global";
@@ -7,7 +6,7 @@ import * as UUID from 'uuid'
 
 export default class FixturesStorageProvider {
   coldDB: FixturesSQLProvider
-  constructor(configProvider: ConfigProviderInterface) {
+  constructor(configProvider) {
     this.coldDB = new FixturesSQLProvider(configProvider)
   }
 

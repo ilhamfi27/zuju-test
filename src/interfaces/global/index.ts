@@ -1,6 +1,5 @@
 export interface Generic {
   id?: string
-  uuid?: string 
   created?: Date
   updated?: string
 }

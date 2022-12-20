@@ -1,7 +1,6 @@
-import { ConfigProviderInterface } from "../../../config/config.provider.interface"
 import SQLConnection from "./connection"
 
-export const migrate = (c: ConfigProviderInterface) => async (...param: string[]) => {
+export const migrate = (c) => async (...param: string[]) => {
   const dbClient = SQLConnection(c)
   try {
     if (param[0] === 'rollback') await dbClient.migrate.rollback()

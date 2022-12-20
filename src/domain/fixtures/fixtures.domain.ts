@@ -1,13 +1,11 @@
-import { to } from "await-to-js";
-import { ConfigProviderInterface } from "../../config/config.provider.interface";
 import Context from "../../context";
 import FixturesStorageProvider from "../../infrastructure/sql/fixtures/fixtures.provider";
-import FixturesManager, { Fixtures, FixturesByDate, FixturesQueryParam } from "../../interfaces/fixtures";
+import { Fixtures, FixturesByDate, FixturesQueryParam } from "../../interfaces/fixtures";
 import { Param, Paginated } from "../../interfaces/global";
 
-export default class FixturesDomain implements FixturesManager {
+export default class FixturesDomain {
   fixturesSM: FixturesStorageProvider
-  constructor(configProvider: ConfigProviderInterface) {
+  constructor(configProvider) {
     this.fixturesSM = new FixturesStorageProvider(configProvider)
   }
   create(context: Context, data: Fixtures): Promise<Fixtures> {

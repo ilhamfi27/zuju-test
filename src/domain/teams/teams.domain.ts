@@ -1,12 +1,11 @@
 import { to } from "await-to-js";
-import { ConfigProviderInterface } from "../../config/config.provider.interface";
 import Context from "../../context";
 import TeamsStorageProvider from "../../infrastructure/sql/teams/teams.provider";
-import TeamsManager, { Teams } from "../../interfaces/teams";
+import { Teams } from "../../interfaces/teams";
 
-export default class TeamsDomain implements TeamsManager {
+export default class TeamsDomain {
   teamsSM: TeamsStorageProvider
-  constructor(configProvider: ConfigProviderInterface) {
+  constructor(configProvider) {
     this.teamsSM = new TeamsStorageProvider(configProvider)
   }
   getAll(context: Context, fixture_id: string): Promise<Teams[]> {

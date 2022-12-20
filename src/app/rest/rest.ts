@@ -2,16 +2,15 @@ import DomainManager from "../../domain/domain.manager"
 import express from 'express'
 import {Server, createServer} from 'http'
 import { RestRouter } from "./router"
-import { ConfigProviderInterface } from "../../config/config.provider.interface"
 import fileExistance from "../../helper/file.existance"
 import path from "path"
 import * as dotenv from 'dotenv';
 export default class HttpHandler {
   m: DomainManager
-  configProvider: ConfigProviderInterface
+  configProvider
 
   server: Server
-  constructor(m: DomainManager, configProvider: ConfigProviderInterface) {
+  constructor(m: DomainManager, configProvider) {
     this.m = m
     this.configProvider = configProvider
     const server = express()
@@ -27,7 +26,7 @@ export default class HttpHandler {
       this.configProvider.logger().info(`app started on ${this.configProvider.listenHost()}:${this.configProvider.listenPort()}`)
     })
   }
-  configuration(): ConfigProviderInterface {
+  configuration() {
     return this.configProvider
   }
   app() {

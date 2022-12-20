@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-import { ConfigProviderInterface } from './config.provider.interface';
 import path from 'path';
 import pino, { BaseLogger } from 'pino';
 import fileExistance from '../helper/file.existance';
@@ -14,7 +13,7 @@ function newLogger(): BaseLogger {
   });
 }
 
-export class ConfigProvider implements ConfigProviderInterface {
+export class ConfigProvider {
   l?: BaseLogger = undefined;
   constructor() {
     if (fileExistance(path.join(__dirname, '../../.env'))) {

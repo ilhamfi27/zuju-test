@@ -1,4 +1,3 @@
-import { ConfigProviderInterface } from "../../../config/config.provider.interface";
 import Context from "../../../context";
 import * as UUID from 'uuid'
 import TeamsSQLProvider from "./sql/teams.sql.provider";
@@ -6,7 +5,7 @@ import { Teams } from "../../../interfaces/teams";
 
 export default class TeamsStorageProvider {
   coldDB: TeamsSQLProvider
-  constructor(configProvider: ConfigProviderInterface) {
+  constructor(configProvider) {
     this.coldDB = new TeamsSQLProvider(configProvider)
   }
 

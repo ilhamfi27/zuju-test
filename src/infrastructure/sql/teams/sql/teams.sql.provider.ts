@@ -1,4 +1,3 @@
-import { ConfigProviderInterface } from '../../../../config/config.provider.interface';
 import Context from '../../../../context';
 import { NotFoundError } from '../../../../errors';
 import { Teams, TeamsQueryParam } from '../../../../interfaces/teams';
@@ -6,8 +5,8 @@ import { Paginated, Param } from '../../../../interfaces/global';
 import SQLConnection, { tables } from '../../driver/connection';
 
 export default class TeamsSQLProvider {
-  configProvider: ConfigProviderInterface;
-  constructor(configProvider: ConfigProviderInterface) {
+  configProvider;
+  constructor(configProvider) {
     this.configProvider = configProvider;
   }
 
