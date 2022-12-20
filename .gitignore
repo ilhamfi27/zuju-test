@@ -1,8 +1,10 @@
 node_modules
 dist
 build/docker/volumes
+!build/docker/.env
 coverage
 .certs
 *.DS_Store
 .bin
 .pkg
+.env

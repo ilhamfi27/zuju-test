@@ -10,9 +10,6 @@ import fixturesController, { fixturesParams } from './controllers/fixtures.contr
 import { RestRequest } from './types';
 import teamsController, { teamsParams } from './controllers/teams.controller';
 
-const basicAuthUsername = process.env.BASIC_AUTH_USERNAME || 'admin'
-const basicAuthPassword = process.env.BASIC_AUTH_PASSWORD || 'supersecretauth'
-
 require('express-async-errors');
 
 const getUnauthorizedResponse = (_req) => {
@@ -35,7 +32,7 @@ export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface
   router.get(`/fixtures/calendar`, fixturesCtrl.getAllFixturesByDate)
 
   adminRouter.use(basicAuth({
-    users: { [basicAuthUsername]: basicAuthPassword },
+    users: { [c.basicAuthUsername()]: c.basicAuthPassword() },
     unauthorizedResponse: getUnauthorizedResponse
   }))
   adminRouter.post(`/admin/fixtures`, fixturesCtrl.createFixtures)

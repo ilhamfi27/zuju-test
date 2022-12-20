@@ -9,4 +9,6 @@ export interface ConfigProviderInterface {
   getEnvironment(): string
   allowedCorsDomains(): string
   logger(): BaseLogger
+  basicAuthUsername(): string
+  basicAuthPassword(): string
 }

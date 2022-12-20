@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import { ConfigProviderInterface } from './config.provider.interface';
 import path from 'path';
 import pino, { BaseLogger } from 'pino';
+import fileExistance from '../helper/file.existance';
 dotenv.config();
 
 
@@ -16,7 +17,10 @@ function newLogger(): BaseLogger {
 export class ConfigProvider implements ConfigProviderInterface {
   l?: BaseLogger = undefined;
   constructor() {
-    dotenv.config({ path: path.join(__dirname, '../../.env') });
+    if (fileExistance(path.join(__dirname, '../../.env'))) {
+      dotenv.config({ path: path.join(__dirname, '../../.env') })
+      console.log(process.env)
+    }
   }
   listenHost(): string {
     return process.env.LISTEN_HOST || '127.0.0.1'
@@ -42,5 +46,11 @@ export class ConfigProvider implements ConfigProviderInterface {
   }
   allowedCorsDomains(): string {
     return process.env.ALLOWED_CORS_DOMAIN || '*'
+  }
+  basicAuthUsername(): string {
+    return process.env.BASIC_AUTH_USERNAME || 'admin'
+  }
+  basicAuthPassword(): string {
+    return process.env.BASIC_AUTH_PASSWORD || 'supersecretauth'
   }
 }

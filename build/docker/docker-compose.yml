@@ -93,7 +93,7 @@ services:
       - ./.env
     command: bash -c "npm run dev"
     ports:
-      - 14045:3000
+      - 31080:3000
     networks:
       default:
   zuju-test-migrator:
