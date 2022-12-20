@@ -1,4 +1,4 @@
-import knex, { Knex } from 'knex';
+import { Knex } from 'knex';
 import { ConfigProviderInterface } from '../../../../config/config.provider.interface';
 import Context from '../../../../context';
 import { NotFoundError } from '../../../../errors';
@@ -6,6 +6,7 @@ import {
   Fixtures,
   FixturesByDate,
   FixturesQueryParam,
+  MatchStatus,
 } from '../../../../interfaces/fixtures';
 import { Paginated, Param } from '../../../../interfaces/global';
 import SQLConnection, { tables } from '../../driver/connection';
@@ -38,8 +39,7 @@ export default class FixturesSQLProvider {
     let fixturesDB = this.fixturesDB().select(
       `${tables.INDEX_TABLE_FIXTURES}.id`,
       `${tables.INDEX_TABLE_FIXTURES}.tournament_name`,
-      `${tables.INDEX_TABLE_FIXTURES}.match_status`,
-      `${tables.INDEX_TABLE_FIXTURES}.date`
+      `${tables.INDEX_TABLE_FIXTURES}.match_datetime`
     );
 
     const search =
@@ -65,7 +65,7 @@ export default class FixturesSQLProvider {
           `${tables.INDEX_TABLE_FIXTURES}.${sort[0]}`,
           sort[1]
         )) ||
-      fixturesDB.orderBy(`${tables.INDEX_TABLE_FIXTURES}.date`, 'asc');
+      fixturesDB.orderBy(`${tables.INDEX_TABLE_FIXTURES}.match_datetime`, 'asc');
 
     const t = await fixturesDB
       .clone()
@@ -79,7 +79,7 @@ export default class FixturesSQLProvider {
     fixturesDB = fixturesDB.limit(size).offset((page - 1) * size);
 
     const fixtures = await fixturesDB;
-
+    
     for (const fixture of fixtures) {
       const homeTeam = await this.teamsSM.getByCompetition(
         context,
@@ -91,6 +91,7 @@ export default class FixturesSQLProvider {
         fixture.id,
         'AWAY'
       );
+      fixture.match_status = new Date(fixture.match_datetime) > new Date() ? MatchStatus.FIXTURE : MatchStatus.PLAYED
       fixture.score = { home: homeTeam.score, away: awayTeam.score };
       delete homeTeam.score;
       delete awayTeam.score;
@@ -118,7 +119,7 @@ export default class FixturesSQLProvider {
   ): Promise<FixturesByDate[]> {
     let fixturesDB = this.fixturesDB().select(
       this.db.raw(
-        `count(${tables.INDEX_TABLE_FIXTURES}.id) as match_count, ${tables.INDEX_TABLE_FIXTURES}.date`
+        `count(${tables.INDEX_TABLE_FIXTURES}.id) as match_count, ${tables.INDEX_TABLE_FIXTURES}.match_datetime`
       )
     );
 
@@ -130,14 +131,14 @@ export default class FixturesSQLProvider {
     fixturesDB =
       (startDate &&
         fixturesDB.where(
-          `${tables.INDEX_TABLE_FIXTURES}.date`,
+          `${tables.INDEX_TABLE_FIXTURES}.match_datetime`,
           `>=`,
           startDate
         )) ||
       fixturesDB;
-    fixturesDB = fixturesDB.groupBy(`${tables.INDEX_TABLE_FIXTURES}.date`);
+    fixturesDB = fixturesDB.groupBy(`${tables.INDEX_TABLE_FIXTURES}.match_datetime`);
     fixturesDB = fixturesDB.orderBy(
-      `${tables.INDEX_TABLE_FIXTURES}.date`,
+      `${tables.INDEX_TABLE_FIXTURES}.match_datetime`,
       'asc'
     );
     const fixtures = await fixturesDB;
@@ -150,15 +151,13 @@ export default class FixturesSQLProvider {
     let fixturesDB = this.fixturesDB().select(
       `${tables.INDEX_TABLE_FIXTURES}.id`,
       `${tables.INDEX_TABLE_FIXTURES}.tournament_name`,
-      `${tables.INDEX_TABLE_FIXTURES}.match_status`,
-      `${tables.INDEX_TABLE_FIXTURES}.date`
+      `${tables.INDEX_TABLE_FIXTURES}.match_datetime`
     );
 
     const [fixtures] = await fixturesDB.where(
       `${tables.INDEX_TABLE_FIXTURES}.id`,
       id
     );
-    fixtures.rules = JSON.parse(fixtures.rules);
 
     if (!fixtures) throw NotFoundError('Fixtures not found');
     return fixtures;

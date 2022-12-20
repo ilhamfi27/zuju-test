@@ -11,7 +11,7 @@ export const seedFixtures = async () => {
     const el = element;
     const data = {
       ...el,
-      date: new Date(el.date)
+      match_datetime: new Date(el.match_datetime)
     };
     const [e] = await to(dbConn(tables.INDEX_TABLE_FIXTURES).insert(data));
     if (e) throw new Error(e.message);

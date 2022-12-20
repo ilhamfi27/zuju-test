@@ -6,6 +6,7 @@ export default interface FixturesManager {
   create(context: Context, data: Fixtures): Promise<Fixtures>
   getAll(context: Context, param?: Param<FixturesQueryParam>): Promise<Paginated<Fixtures>>
   getAllByDate(context: Context, param?: Param<FixturesQueryParam>): Promise<FixturesByDate[]>
+  get(context: Context, id: string): Promise<Fixtures>
   update(context: Context, id: string, data: Fixtures): Promise<Fixtures>
   delete(context: Context, id: string): Promise<void>
 }

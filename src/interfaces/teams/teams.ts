@@ -5,6 +5,7 @@ export interface Teams extends Generic {
   code: string
   score: number
   team_side: string
+  team_logo: string
   fixture_id: string
 }
 

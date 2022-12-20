@@ -11,6 +11,7 @@ export const up = (knex: Knex, _promise: Promise<any>) => {
     table.string('code')
     table.integer('score').nullable().defaultTo(null)
     table.enum('team_side', ['AWAY', 'HOME']).defaultTo('HOME')
+    table.string('team_logo')
     table.string('fixture_id')
   })
 }

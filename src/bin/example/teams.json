@@ -5,6 +5,7 @@
     "code": "CAN",
     "score": 1,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Canada",
     "fixture_id": "competition:308837b7-013e-4e59-9367-b826f4f1eaf8"
   },
   {
@@ -13,6 +14,7 @@
     "code": "MAR",
     "score": 2,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Morocco",
     "fixture_id": "competition:308837b7-013e-4e59-9367-b826f4f1eaf8"
   },
   {
@@ -21,6 +23,7 @@
     "code": "CRO",
     "score": 0,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Croatia",
     "fixture_id": "competition:126ceec4-4e52-4ecc-bd69-6159049b6469"
   },
   {
@@ -29,6 +32,7 @@
     "code": "BEL",
     "score": 0,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Belgium",
     "fixture_id": "competition:126ceec4-4e52-4ecc-bd69-6159049b6469"
   },
   {
@@ -37,6 +41,7 @@
     "code": "CRC",
     "score": 2,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Costa Rica",
     "fixture_id": "competition:e371c44b-244d-4804-8b74-3b9dfa0c298c"
   },
   {
@@ -45,6 +50,7 @@
     "code": "GER",
     "score": 4,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Germany",
     "fixture_id": "competition:e371c44b-244d-4804-8b74-3b9dfa0c298c"
   },
   {
@@ -53,6 +59,7 @@
     "code": "JPN",
     "score": 2,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Japan",
     "fixture_id": "competition:978c94dc-15d4-4ae8-bdf5-8b0ba5e0ef18"
   },
   {
@@ -61,6 +68,7 @@
     "code": "ESP",
     "score": 1,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Spain",
     "fixture_id": "competition:978c94dc-15d4-4ae8-bdf5-8b0ba5e0ef18"
   },
   {
@@ -69,6 +77,7 @@
     "code": "GHA",
     "score": 0,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Ghana",
     "fixture_id": "competition:37904d8b-bf11-42d3-b868-b5c28e0a0ba0"
   },
   {
@@ -77,6 +86,7 @@
     "code": "URU",
     "score": 2,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Uruguay",
     "fixture_id": "competition:37904d8b-bf11-42d3-b868-b5c28e0a0ba0"
   },
   {
@@ -85,6 +95,7 @@
     "code": "KOR",
     "score": 2,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Republic+of+Korea",
     "fixture_id": "competition:10f1fa0e-cbbd-4197-b97e-d83bee0cbb63"
   },
   {
@@ -93,6 +104,7 @@
     "code": "POR",
     "score": 1,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Portugal",
     "fixture_id": "competition:10f1fa0e-cbbd-4197-b97e-d83bee0cbb63"
   },
   {
@@ -101,6 +113,7 @@
     "code": "SRB",
     "score": 2,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Serbia",
     "fixture_id": "competition:a328cb05-a6cd-4945-8f02-232792f3e3ba"
   },
   {
@@ -109,6 +122,7 @@
     "code": "SUI",
     "score": 3,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Switzerland",
     "fixture_id": "competition:a328cb05-a6cd-4945-8f02-232792f3e3ba"
   },
   {
@@ -117,6 +131,7 @@
     "code": "CMR",
     "score": 1,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Cameroon",
     "fixture_id": "competition:5e71c838-047f-4f9b-b0dd-90dd9a24ad10"
   },
   {
@@ -125,6 +140,7 @@
     "code": "BRA",
     "score": 0,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Brazil",
     "fixture_id": "competition:5e71c838-047f-4f9b-b0dd-90dd9a24ad10"
   },
   {
@@ -133,6 +149,7 @@
     "code": "NED",
     "score": 3,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Netherlands",
     "fixture_id": "competition:cca5df96-1e2e-49ca-b40f-9b83813c05ba"
   },
   {
@@ -141,6 +158,7 @@
     "code": "USA",
     "score": 1,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=USA",
     "fixture_id": "competition:cca5df96-1e2e-49ca-b40f-9b83813c05ba"
   },
   {
@@ -149,6 +167,7 @@
     "code": "ARG",
     "score": 2,
     "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Argentina",
     "fixture_id": "competition:cf6dd48d-2f25-4afc-8629-7a40e53330ce"
   },
   {
@@ -157,38 +176,97 @@
     "code": "AUS",
     "score": 1,
     "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Australia",
     "fixture_id": "competition:cf6dd48d-2f25-4afc-8629-7a40e53330ce"
   },
   {
     "id": "competitor:d10d3f33-27a9-4781-b0f2-f3db5a12952a",
     "name": "Croatia",
     "code": "CRO",
-    "score": null,
+    "score": 2,
     "team_side": "HOME",
-    "fixture_id": "competition-6208-4754-a346-789c059f66c3"
+    "team_logo": "https://via.placeholder.com/120.png?text=Croatia",
+    "fixture_id": "competition:52883881-6208-4754-a346-789c059f66c3"
   },
   {
     "id": "competitor:1c1f0d2f-d3cd-45f4-9c9c-add0b1e3e507",
     "name": "Morocco",
     "code": "MAR",
-    "score": null,
+    "score": 1,
     "team_side": "AWAY",
-    "fixture_id": "competition-6208-4754-a346-789c059f66c3"
+    "team_logo": "https://via.placeholder.com/120.png?text=Morocco",
+    "fixture_id": "competition:52883881-6208-4754-a346-789c059f66c3"
   },
   {
     "id": "competitor:0426743e-87de-48b2-9cc7-fe1822e2a273",
     "name": "Argentina",
     "code": "ARG",
-    "score": null,
+    "score": 3,
     "team_side": "HOME",
-    "fixture_id": "competition-8cb9-4898-87a4-8913fca3bf70"
+    "team_logo": "https://via.placeholder.com/120.png?text=Argentina",
+    "fixture_id": "competition:976aedcb-8cb9-4898-87a4-8913fca3bf70"
   },
   {
     "id": "competitor:4f4b534c-f076-4c69-8b4f-30e3c867448b",
     "name": "France",
     "code": "FRA",
+    "score": 3,
+    "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=France",
+    "fixture_id": "competition:976aedcb-8cb9-4898-87a4-8913fca3bf70"
+  },
+  {
+    "id": "competitor:fdfc7c40-0319-40a2-8632-b2f93d12b688",
+    "name": "Wolverhampton Wanderers",
+    "code": "WOL",
+    "score": null,
+    "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Wolverhampton+Wanderers",
+    "fixture_id": "competition:e3b56b85-63b4-48ae-ba71-662f05ff310c"
+  },
+  {
+    "id": "competitor:76ae4101-df7c-47de-a458-a2ca46c98caa",
+    "name": "Manchester United",
+    "code": "MUN",
     "score": null,
     "team_side": "AWAY",
-    "fixture_id": "competition-8cb9-4898-87a4-8913fca3bf70"
+    "team_logo": "https://via.placeholder.com/120.png?text=Manchester+United",
+    "fixture_id": "competition:e3b56b85-63b4-48ae-ba71-662f05ff310c"
+  },
+  {
+    "id": "competitor:b671a1aa-2fe9-4d5d-9be6-693a9feeec56",
+    "name": "Manchester City",
+    "code": "MCI",
+    "score": null,
+    "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Manchester+City",
+    "fixture_id": "competition:344a73e8-7606-4be5-ab5d-b1172c7e6eff"
+  },
+  {
+    "id": "competitor:735b5456-beb5-4f33-bf6a-8e1c030a9176",
+    "name": "Everton FC",
+    "code": "EVE",
+    "score": null,
+    "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Everton+FC",
+    "fixture_id": "competition:344a73e8-7606-4be5-ab5d-b1172c7e6eff"
+  },
+  {
+    "id": "competitor:74ff5475-2966-407f-9b21-30ea4665ac33",
+    "name": "Newcastle United",
+    "code": "NEW",
+    "score": null,
+    "team_side": "HOME",
+    "team_logo": "https://via.placeholder.com/120.png?text=Newcastle+United",
+    "fixture_id": "competition:6484f129-92a5-417c-8950-4d76942b9e2f"
+  },
+  {
+    "id": "competitor:47ffad4f-41f4-4b59-bd0d-eb1758bdf843",
+    "name": "Leeds United",
+    "code": "LEE",
+    "score": null,
+    "team_side": "AWAY",
+    "team_logo": "https://via.placeholder.com/120.png?text=Leeds+United",
+    "fixture_id": "competition:6484f129-92a5-417c-8950-4d76942b9e2f"
   }
 ]

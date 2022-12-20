@@ -19,6 +19,9 @@ export default class FixturesDomain implements FixturesManager {
   async getAllByDate(context: Context, param?: Param<FixturesQueryParam> | undefined): Promise<FixturesByDate[]> {
     return this.fixturesSM.getAllByDate(context, param)
   }
+  get(context: Context, id: string): Promise<Fixtures> {
+    return this.fixturesSM.get(context, id)
+  }
   update(context: Context, id: string, data: Fixtures): Promise<Fixtures> {
     return this.fixturesSM.update(context, id, data)
   }

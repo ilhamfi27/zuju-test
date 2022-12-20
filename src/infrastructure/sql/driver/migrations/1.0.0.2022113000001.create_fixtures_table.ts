@@ -9,7 +9,7 @@ export const up = (knex: Knex, _promise: Promise<any>) => {
     
     table.string('tournament_name')
     table.enum('match_status', ['FIXTURE', 'PLAYED']).defaultTo('FIXTURE')
-    table.datetime('date')
+    table.dateTime('match_datetime')
   })
 }
 

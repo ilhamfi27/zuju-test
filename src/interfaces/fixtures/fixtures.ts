@@ -1,9 +1,14 @@
 import { Generic } from "../global"
 
+export enum MatchStatus {
+  FIXTURE = 'FIXTURE',
+  PLAYED = 'PLAYED'
+}
+
 export interface Fixtures extends Generic {
   tournament_name: string
-  match_status: string
-  date: Date
+  match_status: MatchStatus
+  match_datetime: Date
 }
 
 export interface FixturesByDate {
