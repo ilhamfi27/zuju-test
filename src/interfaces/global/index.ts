@@ -19,10 +19,6 @@ export interface Paginated<Type> {
   data: Type[]
 }
 
-export interface ObjectValueOf<T> {
- [key: string]: T
-}
-
 export interface Param<T> {
   pagination?: PaginationParam
   search?: T

@@ -1,7 +1,6 @@
 import Context from '../../../../context';
 import { NotFoundError } from '../../../../errors';
-import { Teams, TeamsQueryParam } from '../../../../interfaces/teams';
-import { Paginated, Param } from '../../../../interfaces/global';
+import { Teams } from '../../../../interfaces/teams';
 import SQLConnection, { tables } from '../../driver/connection';
 
 export default class TeamsSQLProvider {

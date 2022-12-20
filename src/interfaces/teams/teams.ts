@@ -13,10 +13,3 @@ export interface Teams extends Generic {
   team_logo: string
   fixture_id: string
 }
-
-export interface TeamsQueryParam {
-  searchBy?: string
-  search?: string
-  sortBy?: string
-  sortOrder?: 'asc' | 'desc'
-}
