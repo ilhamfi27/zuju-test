@@ -3,8 +3,8 @@ services:
   ########################
   # SERVICE DEPENDENCIES #
   ########################
-  mariadb:
-    image: mariadb:10.3.10
+  mysql:
+    image: mysql:5.7.40
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=zuju
@@ -17,23 +17,23 @@ services:
     networks:
       default:
     volumes:
-      - ./volumes/mariadb:/var/lib/mysql
+      - ./volumes/mysql:/var/lib/mysql
     ports:
       - 55558:3306
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:
-      - mariadb
+      - mysql
     restart: unless-stopped
     environment:
-      - PMA_HOST=mariadb
+      - PMA_HOST=mysql
     ports:
       - 55559:80
-  prepare-mariadb:
-    image: mariadb:10.3.8
+  prepare-mysql:
+    image: mysql:5.7.40
     restart: on-failure
     depends_on:
-      mariadb:
+      mysql:
         condition: service_healthy
     environment:
       SQL: |-
@@ -41,7 +41,7 @@ services:
         GRANT ALL PRIVILEGES ON `zuju-test`.* TO 'zuju'@'%';
     entrypoint: /bin/bash -c
     command:
-      - mysql -u root -p"zuju" -h mariadb -e "$$SQL"
+      - mysql -u root -p"zuju" -h mysql -e "$$SQL"
   zuju-test-proxy:
     image: caddy:2.2.1-alpine
     restart: unless-stopped
@@ -96,7 +96,7 @@ services:
       default:
   zuju-test-migrator:
     depends_on:
-      mariadb:
+      mysql:
         condition: service_healthy
     build: 
       context: ../../

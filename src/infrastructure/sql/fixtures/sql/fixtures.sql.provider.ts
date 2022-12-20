@@ -63,7 +63,10 @@ export default class FixturesSQLProvider {
           `${tables.INDEX_TABLE_FIXTURES}.${sort[0]}`,
           sort[1]
         )) ||
-      fixturesDB.orderBy(`${tables.INDEX_TABLE_FIXTURES}.match_datetime`, 'asc');
+      fixturesDB.orderBy(
+        `${tables.INDEX_TABLE_FIXTURES}.match_datetime`,
+        'asc'
+      );
 
     const t = await fixturesDB
       .clone()
@@ -77,7 +80,7 @@ export default class FixturesSQLProvider {
     fixturesDB = fixturesDB.limit(size).offset((page - 1) * size);
 
     const fixtures = await fixturesDB;
-    
+
     for (const fixture of fixtures) {
       const home_team = await this.teamsSM.getByCompetition(
         context,
@@ -89,10 +92,10 @@ export default class FixturesSQLProvider {
         fixture.id,
         'AWAY'
       );
-      fixture.match_status = new Date(fixture.match_datetime) > new Date() ? MatchStatus.FIXTURE : MatchStatus.PLAYED
-      fixture.score = { home: home_team.score, away: away_team.score };
-      delete home_team.score;
-      delete away_team.score;
+      fixture.match_status =
+        new Date(fixture.match_datetime) > new Date()
+          ? MatchStatus.FIXTURE
+          : MatchStatus.PLAYED;
       fixture.home_team = home_team;
       fixture.away_team = away_team;
     }
@@ -117,15 +120,15 @@ export default class FixturesSQLProvider {
   ): Promise<FixturesByDate[]> {
     let fixturesDB = this.fixturesDB().select(
       this.db.raw(
-        `count(${tables.INDEX_TABLE_FIXTURES}.id) as match_count, ${tables.INDEX_TABLE_FIXTURES}.match_datetime`
+        `COUNT(${tables.INDEX_TABLE_FIXTURES}.id) as match_count, DATE(${tables.INDEX_TABLE_FIXTURES}.match_datetime) as date`
       )
     );
 
     const startDate =
       param && param.search && param.search.startDate
-        ? param.search.startDate
+        ? new Date(param.search.startDate)
         : undefined;
-
+    
     fixturesDB =
       (startDate &&
         fixturesDB.where(
@@ -134,10 +137,11 @@ export default class FixturesSQLProvider {
           startDate
         )) ||
       fixturesDB;
-    fixturesDB = fixturesDB.groupByRaw(`DATE(${tables.INDEX_TABLE_FIXTURES}.match_datetime)`);
-    fixturesDB = fixturesDB.orderBy(
-      `${tables.INDEX_TABLE_FIXTURES}.match_datetime`,
-      'asc'
+    fixturesDB = fixturesDB.groupByRaw(
+      `DATE(${tables.INDEX_TABLE_FIXTURES}.match_datetime)`
+    );
+    fixturesDB = fixturesDB.orderByRaw(
+      `DATE(${tables.INDEX_TABLE_FIXTURES}.match_datetime) asc`
     );
     const fixtures = await fixturesDB;
     const data: FixturesByDate[] = await Promise.all(fixtures);

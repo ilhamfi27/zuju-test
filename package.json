@@ -12,9 +12,8 @@
     "build": "tsc --project tsconfig.json",
     "compile": "cross-env NODE_ENV=production PKG_CACHE_PATH=.pkg PKG_PLATFORM=${PKG_PLATFORM} ts-node build/compiler/pkg.ts",
     "pkg": "npm run build && npm run compile",
-    "test": "NODE_ENV=development jest --detectOpenHandles",
-    "test:migrate": "DSN=mysql://root:zuju@127.0.0.1:55558/zuju-test npm run migrate",
-    "test:local": "DSN=mysql://root:zuju@127.0.0.1:55558/zuju-test npm run test"
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "test:migrate": "NODE_ENV=test npm run migrate"
   },
   "keywords": [],
   "author": "",

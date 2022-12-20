@@ -8,3 +8,4 @@ coverage
 .bin
 .pkg
 .env
+.env.test

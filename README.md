@@ -58,7 +58,7 @@ npm run dev
 6. Open ```http://localhost:{LISTEN_PORT}``` or direct to the docs ```http://localhost:{LISTEN_PORT}/api-docs``` (1321 is port config from .env).
 If your app listen to  using 1321 port, then you can open the app on ```http://localhost:1321```
 
-## Build Application
+## Build The Application
 Below is some way to build this app
 ### Using Docker
 1. Navigate to docker folder
@@ -95,33 +95,33 @@ username: admin
 password: supersecretauth
 
 ```
-## Test Application
+## Test The Application
 To run unit test and integration test for the application, you can run these command below
 
 ### Using NPM
-1. Create .env file from .env.example if .env is not exists
+1. Create .env.test file from .env.example if .env.test is not exists
 ```
-cp .env.example .env
+cp .env.example .env.test
 ```
-2. Edit .env file based on your environment (ex: database, port listening, etc). These below are configurable env variables for the application
+2. Edit .env.test file based on your environment (ex: database, port listening, etc). These below are configurable env variables for the application
 ```
 LISTEN_HOST=0.0.0.0
 LISTEN_PORT=1321
-DSN=mysql://localhost:3306/zuju
+DSN=mysql://localhost:3306/zuju-test
 ALLOWED_CORS_DOMAIN=*
 
 BASIC_AUTH_USERNAME=admin
 BASIC_AUTH_PASSWORD=supersecretauth
 
 ```
-3. Run database test migration by using this code below. Please make sure that your database connection value has been added to .env file value (```DSN```).
+3. Run database test migration by using this code below. Please make sure that your database connection value has been added to .env.test file value (```DSN```).
 
 ```
 npm run test:migrate
 ```
 4. Run the test locally by using this command
 ```
-npm run test:local
+npm run test
 ```
 
 ## Screenshots

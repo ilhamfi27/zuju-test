@@ -5,6 +5,7 @@ import { RestRouter } from "./router"
 import fileExistance from "../../helper/file.existance"
 import path from "path"
 import * as dotenv from 'dotenv';
+import testEnvironment from "../../helper/test.environment"
 export default class HttpHandler {
   m: DomainManager
   configProvider
@@ -21,6 +22,12 @@ export default class HttpHandler {
   serve(): void {
     if (fileExistance(path.join(__dirname, '../../../.env'))) {
       dotenv.config({ path: path.join(__dirname, '../../../.env') })
+    }
+    if (
+      fileExistance(path.join(__dirname, '../../../.env.test')) && 
+      process.env.NODE_ENV === 'test'
+    ) {
+      testEnvironment(path.join(__dirname, '../../../.env.test'))
     }
     this.server.listen(this.configProvider.listenPort(), this.configProvider.listenHost(), () => {
       this.configProvider.logger().info(`app started on ${this.configProvider.listenHost()}:${this.configProvider.listenPort()}`)
