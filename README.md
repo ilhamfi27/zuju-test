@@ -107,7 +107,7 @@ cp .env.example .env
 ```
 LISTEN_HOST=0.0.0.0
 LISTEN_PORT=1321
-DSN=
+DSN=mysql://localhost:3306/zuju
 ALLOWED_CORS_DOMAIN=*
 
 BASIC_AUTH_USERNAME=admin
