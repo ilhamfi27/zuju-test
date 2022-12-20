@@ -5,6 +5,7 @@ services:
   ########################
   zuju-test:
     image: ${IMAGE_NAME}:dev
+    command: bash -c "npm run dev"
   zuju-test-migrator:
     image: ${IMAGE_NAME}:dev
 

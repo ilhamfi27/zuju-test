@@ -90,7 +90,6 @@ services:
       - ../../:${PWD}/../..
     env_file:
       - ./.env
-    command: bash -c "npm run dev"
     ports:
       - 31080:3000
     networks:

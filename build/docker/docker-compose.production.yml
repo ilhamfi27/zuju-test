@@ -5,6 +5,7 @@ services:
   ########################
   zuju-test:
     image: ${IMAGE_NAME}:${IMAGE_VERSION}
+    command: bash -c "npm run start:production"
   zuju-test-migrator:
     image: ${IMAGE_NAME}:${IMAGE_VERSION}
 
