@@ -16,7 +16,7 @@ export const getFixturesID = (r: RestRequest) =>
 
 export const getFixturesBody = (r: RestRequest): Fixtures => ({
   tournament_name: r.body.tournament_name,
-  match_datetime: r.body.match_datetime,
+  match_datetime: new Date(r.body.match_datetime),
 } as Fixtures);
 
 export const getSearch = (r: RestRequest): string => r.query.search as any;
@@ -30,7 +30,7 @@ export const fixturesController = (
   async createFixtures(r: RestRequest, w: Response) {
     const data = getFixturesBody(r);
     const fl = await m.fixturesManager().create(r.context, data);
-    w.send(fl);
+    w.status(201).send(fl);
   },
   async getAllFixtures(r: RestRequest, w: Response) {
     const [page, size, search, sort] = [
@@ -76,7 +76,7 @@ export const fixturesController = (
   async deleteFixtures(r: RestRequest, w: Response) {
     const id = getFixturesID(r);
     await m.fixturesManager().delete(r.context, id);
-    w.status(200).send();
+    w.status(202).send();
   },
 });
 

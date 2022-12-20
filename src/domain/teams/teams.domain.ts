@@ -15,7 +15,7 @@ export default class TeamsDomain implements TeamsManager {
   get(context: Context, fixture_id: string, id: string): Promise<Teams> {
     return this.teamsSM.get(context, fixture_id, id)
   }
-  async update(context: Context, fixture_id: string, data: Teams): Promise<Teams> {
+  async createOrUpdate(context: Context, fixture_id: string, data: Teams): Promise<Teams> {
     const [err, existing] = await to(this.teamsSM.getByCompetition(context, fixture_id, data.team_side))
     if (err) {
       return this.teamsSM.create(context, data)

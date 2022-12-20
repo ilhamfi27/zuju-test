@@ -11,7 +11,6 @@ import {
 import { Paginated, Param } from '../../../../interfaces/global';
 import SQLConnection, { tables } from '../../driver/connection';
 import TeamsStorageProvider from '../../teams/teams.provider';
-import moment from 'moment';
 
 export default class FixturesSQLProvider {
   configProvider: ConfigProviderInterface;
@@ -136,7 +135,7 @@ export default class FixturesSQLProvider {
           startDate
         )) ||
       fixturesDB;
-    fixturesDB = fixturesDB.groupBy(`${tables.INDEX_TABLE_FIXTURES}.match_datetime`);
+    fixturesDB = fixturesDB.groupByRaw(`DATE(${tables.INDEX_TABLE_FIXTURES}.match_datetime)`);
     fixturesDB = fixturesDB.orderBy(
       `${tables.INDEX_TABLE_FIXTURES}.match_datetime`,
       'asc'
@@ -176,39 +175,5 @@ export default class FixturesSQLProvider {
 
   async delete(_context: Context, id: string): Promise<void> {
     await this.fixturesDB().delete().where({ id });
-  }
-
-  private async processFilter(
-    queryBuilder: Knex.QueryBuilder,
-    column: any,
-    value: string
-  ): Promise<Knex.QueryBuilder> {
-    const operator = value.split(':')[0];
-    value = value.split(':')[1];
-    if (moment(value, ['YYYY-MM-DD', 'YYYY-MM-DDTHH:mm:ssZ']).isValid()) {
-      value = moment(value).format('YYYY-MM-DDTHH:mm:ssZ') || value;
-    } else {
-      value = JSON.parse(value);
-    }
-    if (operator.match(/is/gi)) {
-      queryBuilder.whereRaw(`${column} IS ?`, [value]);
-    } else if (operator.match(/not/gi)) {
-      queryBuilder.whereRaw(`${column} IS NOT ?`, [value]);
-    } else if (operator.match(/eq/gi)) {
-      queryBuilder.where(column, `=`, value);
-    } else if (operator.match(/ne/gi)) {
-      queryBuilder.where(column, `!=`, value);
-    } else if (operator.match(/gt/gi)) {
-      queryBuilder.where(column, `>`, value);
-    } else if (operator.match(/gte/gi)) {
-      queryBuilder.where(column, `>=`, value);
-    } else if (operator.match(/lt/gi)) {
-      queryBuilder.where(column, `<=`, value);
-    } else if (operator.match(/lte/gi)) {
-      queryBuilder.where(column, `<=`, value);
-    } else if (operator.match(/like/gi)) {
-      queryBuilder.where(column, `like`, `%${value}%`);
-    }
-    return queryBuilder;
   }
 }

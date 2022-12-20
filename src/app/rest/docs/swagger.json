@@ -160,7 +160,7 @@
     "/admin/fixtures/{id_fixtures}/teams": {
       "get": {
         "description": "Create fixtures listing data",
-        "tags": ["Fixtures Detail Admin"],
+        "tags": ["Teams Admin"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
@@ -183,7 +183,7 @@
     "/admin/fixtures/{id_fixtures}/teams/{id_team}": {
       "get": {
         "description": "Create fixtures listing data",
-        "tags": ["Fixtures Detail Admin"],
+        "tags": ["Teams Admin"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
@@ -212,7 +212,7 @@
     "/admin/fixtures/{id_fixtures}/side/{team_side}": {
       "put": {
         "description": "Create fixtures listing data",
-        "tags": ["Fixtures Detail Admin"],
+        "tags": ["Teams Admin"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {

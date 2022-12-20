@@ -33,6 +33,8 @@ export default {
     "src/context",
     "src/config",
     "src/errors",
+    "src/domain/domain.manager.ts",
+    "tests/fixtures"
   ],
 
   // Indicates which provider should be used to instrument code for coverage

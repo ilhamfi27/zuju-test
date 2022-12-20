@@ -39,5 +39,48 @@ describe('src/domain/team/team.domain.ts', () => {
         expect(res.length).toBe(2);
       });
     });
+
+    describe('.get()', () => {
+      test('get one fixtures', async () => {
+        getMock.mockReturnValue(Promise.resolve(fixtureExamples[0]));
+        const team = teamExamples.find(d => d.fixture_id === fixtureExamples[0].id)
+        const res = await teamDomain.get(context, fixtureExamples[0].id, team.id);
+        expect(getMock).toBeCalled();
+        expect(res.id).toBe(fixtureExamples[0].id);
+      });
+    });
+
+    describe('.update()', () => {
+      test('update team if exists', async () => {
+        const data = { ...teamExamples[1], team_logo: '/canada-logo.png' };
+        const existingFixture = fixtureExamples.find(d => d.id === teamExamples[1].fixture_id)
+        getByCompetitionMock.mockReturnValue(Promise.resolve(teamExamples[1]))
+        updateMock.mockReturnValue(Promise.resolve(data));
+
+        const res = await teamDomain.createOrUpdate(
+          context,
+          existingFixture.id,
+          data
+        );
+        expect(updateMock).toBeCalled();
+        expect(res.id).toBe(teamExamples[1].id);
+      });
+
+      test('create team if not exists', async () => {
+        const data = { ...teamExamples[10], team_logo: '/canada-logo.png' };
+        const existingFixture = fixtureExamples.find(d => d.id === teamExamples[10].fixture_id)
+        getByCompetitionMock.mockReturnValue(Promise.reject('not found'))
+        createMock.mockReturnValue(Promise.resolve(data));
+
+        const res = await teamDomain.createOrUpdate(
+          context,
+          existingFixture.id,
+          data
+        );
+        
+        expect(createMock).toBeCalled();
+        expect(res.id).toBe(teamExamples[10].id);
+      });
+    });
   });
 });

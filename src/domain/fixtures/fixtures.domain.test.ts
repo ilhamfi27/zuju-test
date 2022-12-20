@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { fixtureExamples } from '../../../tests/fixtures/fixtures';
 import { ConfigProvider } from '../../config/config.provider';
 import Context from '../../context';
@@ -41,11 +42,23 @@ describe('src/domain/fixture/fixture.domain.ts', () => {
 
     describe('.getAllByDate()', () => {
       test('getAllByDate fixtures', async () => {
-        getAllByDateMock.mockReturnValue(Promise.resolve(fixtureExamples));
+        const groupedDate = fixtureExamples.reduce((group, match) => {
+          const { match_datetime } = match;
+          const m = match_datetime as any as string
+          const d = m.substring(0, 10)
+          group[d] = group[d] ?? [];
+          group[d].push(match);
+          return group;
+        }, {})
+        const groupedDateArr = Object.keys(groupedDate).map(d => ({
+          match_count: groupedDate[d].length,
+          match_datetime: d
+        }))
+        getAllByDateMock.mockReturnValue(Promise.resolve(groupedDateArr));
 
         const res = await fixtureDomain.getAllByDate(context);
         expect(getAllByDateMock).toBeCalled();
-        expect(res.length).toBe(15);
+        expect(res.length).toBe(6);
       });
     });
 
@@ -53,35 +66,35 @@ describe('src/domain/fixture/fixture.domain.ts', () => {
       test('get one fixtures', async () => {
         getMock.mockReturnValue(Promise.resolve(fixtureExamples[0]));
 
-        const res = await fixtureDomain.get(context, fixtureExamples[0].uuid);
+        const res = await fixtureDomain.get(context, fixtureExamples[0].id);
         expect(getMock).toBeCalled();
-        expect(res.uuid).toBe(fixtureExamples[0].uuid);
+        expect(res.id).toBe(fixtureExamples[0].id);
       });
     });
 
     describe('.create()', () => {
       test('create fixture', async () => {
-        const data = { ...fixtureExamples[0], name: 'Ultra Fixture' };
+        const data = { ...fixtureExamples[0], tournament_name: 'Premier League' };
         createMock.mockReturnValue(Promise.resolve(data));
 
         const res = await fixtureDomain.create(context, data);
         expect(createMock).toBeCalled();
-        expect(res.uuid).toBe(data.uuid);
+        expect(res.id).toBe(data.id);
       });
     });
 
     describe('.update()', () => {
       test('update fixture', async () => {
-        const data = { ...fixtureExamples[1], name: 'Bussiness Fixture' };
+        const data = { ...fixtureExamples[1], tournament_name: 'Premier League' };
         updateMock.mockReturnValue(Promise.resolve(data));
 
         const res = await fixtureDomain.update(
           context,
-          fixtureExamples[1].uuid,
+          fixtureExamples[1].id,
           data
         );
         expect(updateMock).toBeCalled();
-        expect(res.uuid).toBe(fixtureExamples[1].uuid);
+        expect(res.id).toBe(fixtureExamples[1].id);
       });
     });
 
@@ -89,7 +102,7 @@ describe('src/domain/fixture/fixture.domain.ts', () => {
       test('remove fixture', async () => {
         getMock.mockReturnValue(Promise.resolve(fixtureExamples[0]));
         deleteMock.mockReturnValue(Promise.resolve(undefined));
-        await fixtureDomain.delete(context, fixtureExamples[0].uuid);
+        await fixtureDomain.delete(context, fixtureExamples[0].id);
         expect(getMock).toBeCalled();
         expect(deleteMock).toBeCalled();
       });

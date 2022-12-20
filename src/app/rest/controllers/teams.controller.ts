@@ -36,9 +36,6 @@ export const teamsController = (
     w.send(t).status(200);
   },
   async getTeams(r: RestRequest, w: Response) {
-    console.log(getFixturesID(r));
-    console.log(getTeamsID(r));
-
     const t = await m
       .teamsManager()
       .get(r.context, getFixturesID(r), getTeamsID(r));
@@ -46,7 +43,7 @@ export const teamsController = (
   },
   async updateTeams(r: RestRequest, w: Response) {
     const body = getTeamsBody(r);
-    const t = await m.teamsManager().update(r.context, getFixturesID(r), body);
+    const t = await m.teamsManager().createOrUpdate(r.context, getFixturesID(r), body);
     w.send(t).status(200);
   },
 });
