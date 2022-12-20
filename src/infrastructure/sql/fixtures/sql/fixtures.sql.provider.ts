@@ -90,6 +90,9 @@ export default class FixturesSQLProvider {
         'AWAY'
       );
       fixture.match_status = new Date(fixture.match_datetime) > new Date() ? MatchStatus.FIXTURE : MatchStatus.PLAYED
+      fixture.score = { home: home_team.score, away: away_team.score };
+      delete home_team.score;
+      delete away_team.score;
       fixture.home_team = home_team;
       fixture.away_team = away_team;
     }
