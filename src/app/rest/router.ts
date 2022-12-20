@@ -34,10 +34,8 @@ export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface
   router.delete(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.deleteFixtures)
 
   router.get(`/admin/fixtures/:${fixturesParams.id}/teams`, teamsCtrl.getAllTeams)
-  router.post(`/admin/fixtures/:${fixturesParams.id}/teams`, teamsCtrl.createTeams)
   router.get(`/admin/fixtures/:${fixturesParams.id}/teams/:${teamsParams.id}`, teamsCtrl.getTeams)
-  router.put(`/admin/fixtures/:${fixturesParams.id}/teams/:${teamsParams.id}`, teamsCtrl.updateTeams)
-  router.delete(`/admin/fixtures/:${fixturesParams.id}/teams/:${teamsParams.id}`, teamsCtrl.deleteTeams)
+  router.put(`/admin/fixtures/:${fixturesParams.id}/side/:${teamsParams.side}`, teamsCtrl.updateTeams)
 
   router.use('/api-docs', swaggerExpress.serve, swaggerExpress.setup(docs));
   router.use(catchMiddleware(c.logger()));

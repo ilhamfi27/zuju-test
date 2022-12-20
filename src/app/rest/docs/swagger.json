@@ -178,30 +178,6 @@
             "$ref": "#/components/responses/UnauthorizedError"
           }
         }
-      },
-      "post": {
-        "description": "Create fixtures listing data",
-        "tags": ["Fixtures Detail Admin"],
-        "security": [{ "basicAuth": [] }],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id_fixtures",
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/FixtureDetailDetails"
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
-          }
-        },
-        "requestBody": {
-          "$ref": "#/components/requestBodies/FixturesDetailCreate"
-        }
       }
     },
     "/admin/fixtures/{id_fixtures}/teams/{id_team}": {
@@ -218,7 +194,7 @@
           },
           {
             "in": "path",
-            "name": "id_details",
+            "name": "id_team",
             "required": true,
             "schema": { "type": "string" }
           }
@@ -231,34 +207,9 @@
             "$ref": "#/components/responses/UnauthorizedError"
           }
         }
-      },
-      "delete": {
-        "description": "Update fixtures listing data",
-        "tags": ["Fixtures Detail Admin"],
-        "security": [{ "basicAuth": [] }],
-        "responses": {
-          "202": {
-            "description": "no content"
-          },
-          "401": {
-            "$ref": "#/components/responses/UnauthorizedError"
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id_fixtures",
-            "required": true,
-            "schema": { "type": "string" }
-          },
-          {
-            "in": "path",
-            "name": "id_details",
-            "required": true,
-            "schema": { "type": "string" }
-          }
-        ]
-      },
+      }
+    },
+    "/admin/fixtures/{id_fixtures}/side/{team_side}": {
       "put": {
         "description": "Create fixtures listing data",
         "tags": ["Fixtures Detail Admin"],
@@ -272,7 +223,7 @@
           },
           {
             "in": "path",
-            "name": "id_details",
+            "name": "team_side",
             "required": true,
             "schema": { "type": "string" }
           }
@@ -354,7 +305,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/FixturesDetailsRequestBody"
+              "$ref": "#/components/schemas/FixturesDetailsResponseBody"
             }
           }
         }
@@ -366,7 +317,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/components/schemas/FixturesDetailsRequestBody"
+                "$ref": "#/components/schemas/FixturesDetailsResponseBody"
               }
             }
           }
@@ -377,7 +328,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/FixturesDetailsRequestBody"
+              "$ref": "#/components/schemas/FixturesDetailsResponseBody"
             }
           }
         }
@@ -566,6 +517,23 @@
         }
       },
       "FixturesDetailsRequestBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "score": {
+            "type": "integer"
+          },
+          "team_logo": {
+            "type": "string"
+          }
+        }
+      },
+      "FixturesDetailsResponseBody": {
         "type": "object",
         "properties": {
           "name": {
