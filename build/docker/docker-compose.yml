@@ -18,6 +18,8 @@ services:
       default:
     volumes:
       - ./volumes/mariadb:/var/lib/mysql
+    ports:
+      - 55558:3306
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:

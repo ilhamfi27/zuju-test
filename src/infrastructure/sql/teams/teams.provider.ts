@@ -2,7 +2,7 @@ import { ConfigProviderInterface } from "../../../config/config.provider.interfa
 import Context from "../../../context";
 import * as UUID from 'uuid'
 import TeamsSQLProvider from "./sql/teams.sql.provider";
-import { Teams, TeamsQueryParam } from "../../../interfaces/teams";
+import { Teams } from "../../../interfaces/teams";
 
 export default class TeamsStorageProvider {
   coldDB: TeamsSQLProvider
