@@ -16,8 +16,8 @@ describe('GET /fixtures', () => {
     await truncateTeams();
   });
 
-  describe('get fixtures', () => {
-    test('should response with fixtures', async () => {
+  describe('get all fixtures and details with teams', () => {
+    test('should response with fixtures and teams', async () => {
       const res = await request(app).get(`/fixtures`);
       expect(res.status).toBe(200);
       expect(res.body.data).toBeDefined();
@@ -40,7 +40,7 @@ describe('GET /fixtures/calendar', () => {
     await truncateTeams();
   });
 
-  describe('get fixtures', () => {
+  describe('get fixtures calendar', () => {
     test('should response with fixtures group by calendar', async () => {
       const res = await request(app).get(`/fixtures/calendar`);
       expect(res.status).toBe(200);

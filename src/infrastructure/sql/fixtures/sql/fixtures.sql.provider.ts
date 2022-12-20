@@ -80,22 +80,19 @@ export default class FixturesSQLProvider {
     const fixtures = await fixturesDB;
     
     for (const fixture of fixtures) {
-      const homeTeam = await this.teamsSM.getByCompetition(
+      const home_team = await this.teamsSM.getByCompetition(
         context,
         fixture.id,
         'HOME'
       );
-      const awayTeam = await this.teamsSM.getByCompetition(
+      const away_team = await this.teamsSM.getByCompetition(
         context,
         fixture.id,
         'AWAY'
       );
       fixture.match_status = new Date(fixture.match_datetime) > new Date() ? MatchStatus.FIXTURE : MatchStatus.PLAYED
-      fixture.score = { home: homeTeam.score, away: awayTeam.score };
-      delete homeTeam.score;
-      delete awayTeam.score;
-      fixture.homeTeam = homeTeam;
-      fixture.awayTeam = awayTeam;
+      fixture.home_team = home_team;
+      fixture.away_team = away_team;
     }
 
     const total_size: number = t[0]['count'];

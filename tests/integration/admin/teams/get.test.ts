@@ -20,8 +20,15 @@ describe('GET /admin/fixtures/:fixture_id/teams', () => {
     await truncateTeams();
   });
 
-  describe('get fixtures', () => {
-    test('should response with fixtures', async () => {
+  describe('get fixtures teams', () => {
+    test('should be unauthorized', async () => {
+      const res = await request(app)
+        .get(`/admin/fixtures/${fixtureExamples[10].id}/teams`)
+      const team = teamExamples.filter(d => d.fixture_id === fixtureExamples[10].id)
+      expect(res.status).toBe(401);
+    });
+
+    test('should response with fixtures teams', async () => {
       const res = await request(app)
         .get(`/admin/fixtures/${fixtureExamples[10].id}/teams`)
         .auth('admin', 'supersecretauth');
@@ -47,8 +54,15 @@ describe('GET /admin/fixtures/:fixture_id/teams/:team_id', () => {
     await truncateTeams();
   });
 
-  describe('get fixtures', () => {
-    test('should response with fixtures', async () => {
+  describe('get fixtures specific team', () => {
+    test('should be unauthorized', async () => {
+      const team = teamExamples.find(d => d.fixture_id === fixtureExamples[10].id)
+      const res = await request(app)
+        .get(`/admin/fixtures/${fixtureExamples[10].id}/teams/${team.id}`)
+      expect(res.status).toBe(401);
+    });
+    
+    test('should response with specific team from a fixture', async () => {
       const team = teamExamples.find(d => d.fixture_id === fixtureExamples[10].id)
       const res = await request(app)
         .get(`/admin/fixtures/${fixtureExamples[10].id}/teams/${team.id}`)

@@ -81,7 +81,6 @@ services:
       default:
   zuju-test:
     restart: unless-stopped
-    image: ${IMAGE_NAME}:dev
     build: 
       context: ../../
       dockerfile: ./build/docker/dockerfile
@@ -97,7 +96,6 @@ services:
     networks:
       default:
   zuju-test-migrator:
-    image: ${IMAGE_NAME}:dev
     depends_on:
       mariadb:
         condition: service_healthy

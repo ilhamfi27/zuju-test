@@ -1,12 +1,9 @@
 import request from 'supertest';
 import {
   Fixtures,
-  FixturesByDate,
-  FixturesQueryParam,
 } from '../../../../src/interfaces/fixtures';
 import { app } from '../../../app';
 import {
-  fixtureExamples,
   seedFixtures,
   truncateFixtures,
 } from '../../../fixtures/fixtures';
@@ -22,7 +19,17 @@ describe('POST /admin/fixtures', () => {
   });
 
   describe('create fixtures', () => {
-    test('should response with fixtures', async () => {
+    test('should be unauthorized', async () => {
+      const data: Fixtures = {
+        tournament_name: 'BRI League',
+        match_datetime: new Date('2023-01-10T15:00:00Z'),
+      } as Fixtures;
+      const res = await request(app)
+        .post(`/admin/fixtures`)
+        .send(data);
+      expect(res.status).toBe(401);
+    });
+    test('should response a success response and a new fixture data', async () => {
       const data: Fixtures = {
         tournament_name: 'BRI League',
         match_datetime: new Date('2023-01-10T15:00:00Z'),

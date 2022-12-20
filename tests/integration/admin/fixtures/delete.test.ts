@@ -1,9 +1,4 @@
 import request from 'supertest';
-import {
-  Fixtures,
-  FixturesByDate,
-  FixturesQueryParam,
-} from '../../../../src/interfaces/fixtures';
 import { app } from '../../../app';
 import {
   fixtureExamples,
@@ -22,7 +17,13 @@ describe('DELETE /admin/fixtures/:fixture_id', () => {
   });
 
   describe('delete fixtures', () => {
-    test('should response with fixtures', async () => {
+    test('should be unauthorized', async () => {
+      const res = await request(app)
+        .delete(`/admin/fixtures/${fixtureExamples[10].id}`)
+      expect(res.status).toBe(401);
+    });
+
+    test('should delete the corresponding fixture', async () => {
       const res = await request(app)
         .delete(`/admin/fixtures/${fixtureExamples[10].id}`)
         .auth('admin', 'supersecretauth')

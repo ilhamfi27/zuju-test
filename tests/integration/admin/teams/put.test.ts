@@ -1,9 +1,4 @@
 import request from 'supertest';
-import {
-  Fixtures,
-  FixturesByDate,
-  FixturesQueryParam,
-} from '../../../../src/interfaces/fixtures';
 import { Teams } from '../../../../src/interfaces/teams';
 import { app } from '../../../app';
 import {
@@ -30,8 +25,23 @@ describe('PUT /admin/fixtures/:fixture_id/side/:team_side', () => {
     await truncateTeams();
   });
 
-  describe('update fixtures', () => {
-    test('should response with away teams', async () => {
+  describe('update or insert team', () => {
+    test('should be unauthorized', async () => {
+      const teams = teamExamples.filter(
+        (d) => d.fixture_id === fixtureExamples[11].id
+      );
+      const data: Teams = {
+        name: 'Persib Bandung',
+        team_logo: 'https://via.placeholder.com/120.png?text=Persib+Bandung',
+        ...teams[1],
+      } as Teams;
+      const res = await request(app)
+        .put(`/admin/fixtures/${fixtureExamples[11].id}/side/away`)
+        .send(data);
+      expect(res.status).toBe(401);
+    });
+
+    test('should response with away team', async () => {
       const teams = teamExamples.filter(
         (d) => d.fixture_id === fixtureExamples[11].id
       );
@@ -50,7 +60,7 @@ describe('PUT /admin/fixtures/:fixture_id/side/:team_side', () => {
       expect(res.body.team_side).toBe('AWAY');
     });
 
-    test('should response with home teams', async () => {
+    test('should response with home team', async () => {
       const teams = teamExamples.filter(
         (d) => d.fixture_id === fixtureExamples[11].id
       );

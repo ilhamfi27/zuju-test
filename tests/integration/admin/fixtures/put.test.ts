@@ -1,8 +1,6 @@
 import request from 'supertest';
 import {
   Fixtures,
-  FixturesByDate,
-  FixturesQueryParam,
 } from '../../../../src/interfaces/fixtures';
 import { app } from '../../../app';
 import {
@@ -22,7 +20,18 @@ describe('PUT /admin/fixtures/:fixture_id', () => {
   });
 
   describe('update fixtures', () => {
-    test('should response with fixtures', async () => {
+    test('should be unauthorized', async () => {
+      const data: Fixtures = {
+        tournament_name: 'BCA League',
+        match_datetime: new Date(fixtureExamples[10].match_datetime),
+      } as Fixtures;
+      const res = await request(app)
+        .put(`/admin/fixtures/${fixtureExamples[10].id}`)
+        .send(data);
+      expect(res.status).toBe(401);
+    });
+
+    test('should response a success response and an updated fixtures data', async () => {
       const data: Fixtures = {
         tournament_name: 'BCA League',
         match_datetime: new Date(fixtureExamples[10].match_datetime),

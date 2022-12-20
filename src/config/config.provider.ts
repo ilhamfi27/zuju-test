@@ -19,7 +19,6 @@ export class ConfigProvider implements ConfigProviderInterface {
   constructor() {
     if (fileExistance(path.join(__dirname, '../../.env'))) {
       dotenv.config({ path: path.join(__dirname, '../../.env') })
-      console.log(process.env)
     }
   }
   listenHost(): string {

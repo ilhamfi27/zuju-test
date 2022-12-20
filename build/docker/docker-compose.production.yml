@@ -1,0 +1,12 @@
+version: '3.4'
+services:
+  ########################
+  # SERVICE DEPENDENCIES #
+  ########################
+  zuju-test:
+    image: ${IMAGE_NAME}:${IMAGE_VERSION}
+  zuju-test-migrator:
+    image: ${IMAGE_NAME}:${IMAGE_VERSION}
+
+networks:
+  default:
