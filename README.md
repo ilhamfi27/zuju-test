@@ -7,7 +7,7 @@
 3. NodeJS. I use Node 16
 
 ## Running Locally
-Below is some way to run this application locally
+Below are some way to run this application locally
 ### Using Docker
 1. Navigate to docker folder
 ```
@@ -59,7 +59,7 @@ npm run dev
 If your app listen to  using 1321 port, then you can open the app on ```http://localhost:1321```
 
 ## Build The Application
-Below is some way to build this app
+Below are some way to build this app
 ### Using Docker
 1. Navigate to docker folder
 ```
