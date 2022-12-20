@@ -3,7 +3,7 @@ import * as docs from './docs/swagger.json';
 import swaggerExpress from 'swagger-ui-express';
 import bodyParser from 'body-parser';
 import catchMiddleware from './middlewares/catch';
-import cors from 'cors';
+import basicAuth from 'express-basic-auth'
 import DomainManagerInterface from '../../domain/domain.manager.interface';
 import { ConfigProviderInterface } from '../../config/config.provider.interface';
 import fixturesController, { fixturesParams } from './controllers/fixtures.controller';
@@ -15,28 +15,34 @@ require('express-async-errors');
 
 export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface) => {
   const router = Router();
-  const publicRouter = Router();
+  const adminRouter = Router();
   const fixturesCtrl = fixturesController(c, m);
   const teamsCtrl = teamsController(c, m);
 
   router.use(bodyParser.json());
-  router.use(publicRouter);
-  publicRouter.use(cors({ origin: c.allowedCorsDomains() }));
+  adminRouter.use(bodyParser.json());
 
   router.get('/', (_r: RestRequest, w: Response) => {
-    w.redirect('/api-docs')
+    w.send({
+      message: "Hello to My Zuju Code Subsission"
+    })
   })
   router.get(`/fixtures`, fixturesCtrl.getAllFixtures)
   router.get(`/fixtures/calendar`, fixturesCtrl.getAllFixturesByDate)
-  router.post(`/admin/fixtures`, fixturesCtrl.createFixtures)
-  router.get(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.getFixtures)
-  router.put(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.updateFixtures)
-  router.delete(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.deleteFixtures)
 
-  router.get(`/admin/fixtures/:${fixturesParams.id}/teams`, teamsCtrl.getAllTeams)
-  router.get(`/admin/fixtures/:${fixturesParams.id}/teams/:${teamsParams.id}`, teamsCtrl.getTeams)
-  router.put(`/admin/fixtures/:${fixturesParams.id}/side/:${teamsParams.side}`, teamsCtrl.updateTeams)
+  adminRouter.use(basicAuth({
+    users: { 'admin': 'supersecretauth' }
+  }))
+  adminRouter.post(`/admin/fixtures`, fixturesCtrl.createFixtures)
+  adminRouter.get(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.getFixtures)
+  adminRouter.put(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.updateFixtures)
+  adminRouter.delete(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.deleteFixtures)
 
+  adminRouter.get(`/admin/fixtures/:${fixturesParams.id}/teams`, teamsCtrl.getAllTeams)
+  adminRouter.get(`/admin/fixtures/:${fixturesParams.id}/teams/:${teamsParams.id}`, teamsCtrl.getTeams)
+  adminRouter.put(`/admin/fixtures/:${fixturesParams.id}/side/:${teamsParams.side}`, teamsCtrl.updateTeams)
+
+  router.use(adminRouter)
   router.use('/api-docs', swaggerExpress.serve, swaggerExpress.setup(docs));
   router.use(catchMiddleware(c.logger()));
   return router;
