@@ -10,8 +10,14 @@ import fixturesController, { fixturesParams } from './controllers/fixtures.contr
 import { RestRequest } from './types';
 import teamsController, { teamsParams } from './controllers/teams.controller';
 
+const basicAuthUsername = process.env.BASIC_AUTH_USERNAME || 'admin'
+const basicAuthPassword = process.env.BASIC_AUTH_PASSWORD || 'supersecretauth'
 
 require('express-async-errors');
+
+const getUnauthorizedResponse = (_req) => {
+  return 'not authorized'
+}
 
 export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface) => {
   const router = Router();
@@ -23,15 +29,14 @@ export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface
   adminRouter.use(bodyParser.json());
 
   router.get('/', (_r: RestRequest, w: Response) => {
-    w.send({
-      message: "Hello to My Zuju Code Subsission"
-    })
+    w.send("Hello to My Zuju Code Subsission, click <a href='/api-docs'>here</a> to go to the documentation")
   })
   router.get(`/fixtures`, fixturesCtrl.getAllFixtures)
   router.get(`/fixtures/calendar`, fixturesCtrl.getAllFixturesByDate)
 
   adminRouter.use(basicAuth({
-    users: { 'admin': 'supersecretauth' }
+    users: { [basicAuthUsername]: basicAuthPassword },
+    unauthorizedResponse: getUnauthorizedResponse
   }))
   adminRouter.post(`/admin/fixtures`, fixturesCtrl.createFixtures)
   adminRouter.get(`/admin/fixtures/:${fixturesParams.id}`, fixturesCtrl.getFixtures)
@@ -42,8 +47,8 @@ export const RestRouter = (c: ConfigProviderInterface, m: DomainManagerInterface
   adminRouter.get(`/admin/fixtures/:${fixturesParams.id}/teams/:${teamsParams.id}`, teamsCtrl.getTeams)
   adminRouter.put(`/admin/fixtures/:${fixturesParams.id}/side/:${teamsParams.side}`, teamsCtrl.updateTeams)
 
-  router.use(adminRouter)
   router.use('/api-docs', swaggerExpress.serve, swaggerExpress.setup(docs));
   router.use(catchMiddleware(c.logger()));
+  router.use(adminRouter)
   return router;
 };
