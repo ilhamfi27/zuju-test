@@ -102,8 +102,8 @@ export default class FixturesSQLProvider {
     const data: Fixtures[] = await Promise.all(fixtures);
     return {
       pagination: {
-        page,
-        size,
+        page: +page,
+        size: +size,
         total_size,
         total_page: Math.ceil(total_size / size),
       },

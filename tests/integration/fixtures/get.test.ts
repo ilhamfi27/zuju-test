@@ -32,6 +32,20 @@ describe('GET /fixtures', () => {
       expect(res.body.data.length).toBe(15);
       expect(res.body.pagination.page).toBe(1);
     });
+    test('should response in page 1 number with 30 size', async () => {
+      const res = await request(app).get(`/fixtures?size=30&page=1`);
+      expect(res.status).toBe(200);
+      expect(res.body.data).toBeDefined();
+      expect(res.body.data.length).toBe(15);
+      expect(res.body.pagination.page).toBe(1);
+    });
+    test('should response still in page 1 and 30 per page', async () => {
+      const res = await request(app).get(`/fixtures?size=30&page=2`);
+      expect(res.status).toBe(200);
+      expect(res.body.data).toBeDefined();
+      expect(res.body.data.length).toBe(0);
+      expect(res.body.pagination.page).toBe(2);
+    });
   });
 });
 
