@@ -9,29 +9,37 @@
 ## Running Locally
 Below are some way to run this application locally
 ### Using Docker
-1. Navigate to docker folder
+1. Install Node JS dependency
+```
+npm install
+```
+2. Navigate to docker folder
 ```
 cd build/docker
 ```
 
-2. Run docker image build for local development
+3. Run docker image build for local development
 ```
 docker compose build zuju-test
 ```
 
-3. Run docker services
+4. Run docker services
 ```
 docker compose up -d
 ```
 
-4. After All service running, open ```http://localhost:31080``` or direct to the docs ```http://localhost:31080/api-docs``` (31080 is docker published port)
+5. After All service running, open ```http://localhost:31080``` or direct to the docs ```http://localhost:31080/api-docs``` (31080 is docker published port)
 
 ### Using NPM
-1. Create .env file from .env.example if .env is not exists
+1. Install Node JS dependency
+```
+npm install
+```
+2. Create .env file from .env.example if .env is not exists
 ```
 cp .env.example .env
 ```
-2. Edit .env file based on your environment (ex: database, port listening, etc). These below are configurable env variables for the application
+3. Edit .env file based on your environment (ex: database, port listening, etc). These below are configurable env variables for the application
 ```
 LISTEN_HOST=0.0.0.0
 LISTEN_PORT=1321
@@ -42,20 +50,20 @@ BASIC_AUTH_USERNAME=admin
 BASIC_AUTH_PASSWORD=supersecretauth
 
 ```
-3. Run database migration by using this code below. Please make sure that your database connection value has been added to ```DSN``` environment var on your .env file.
+4. Run database migration by using this code below. Please make sure that your database connection value has been added to ```DSN``` environment var on your .env file.
 
 ```
 npm run migrate
 ```
-4. After database migrated, to insert data seed, run this command below.
+5. After database migrated, to insert data seed, run this command below.
 ```
 npm run seed
 ```
-5. Run this application locally by running this command below
+6. Run this application locally by running this command below
 ```
 npm run dev
 ```
-6. Open ```http://localhost:{LISTEN_PORT}``` or direct to the docs ```http://localhost:{LISTEN_PORT}/api-docs``` (1321 is port config from .env).
+7. Open ```http://localhost:{LISTEN_PORT}``` or direct to the docs ```http://localhost:{LISTEN_PORT}/api-docs``` (1321 is port config from .env).
 If your app listen to  using 1321 port, then you can open the app on ```http://localhost:1321```
 
 ## Build The Application
