@@ -57,7 +57,7 @@
   "pkg": {
     "outputPath": ".bin",
     "scripts": [
-      "dist/infrastructure/sql/driver/migrations/*.js",
+      "dist/src/infrastructure/sql/driver/migrations/*.js",
       "node_modules/swagger-ui-dist"
     ],
     "assets": []

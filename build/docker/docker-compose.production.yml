@@ -5,9 +5,16 @@ services:
   ########################
   zuju-test:
     image: ${IMAGE_NAME}:${IMAGE_VERSION}
-    command: bash -c "npm run start:production"
+    build: 
+      context: ../../
+      dockerfile: ./build/docker/dockerfile
+    command: serve
   zuju-test-migrator:
     image: ${IMAGE_NAME}:${IMAGE_VERSION}
+    build: 
+      context: ../../
+      dockerfile: ./build/docker/dockerfile
+    command: migrate
 
 networks:
   default:

@@ -81,10 +81,6 @@ services:
       default:
   zuju-test:
     restart: unless-stopped
-    build: 
-      context: ../../
-      dockerfile: ./build/docker/dockerfile
-      target: builder
     working_dir: ${PWD}/../..
     volumes:
       - ../../:${PWD}/../..
@@ -98,10 +94,6 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    build: 
-      context: ../../
-      dockerfile: ./build/docker/dockerfile
-      target: builder
     working_dir: ${PWD}/../..
     volumes:
       - ../../:${PWD}/../..
